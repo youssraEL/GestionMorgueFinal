@@ -1,0 +1,56 @@
+
+<nb-card>
+  <nb-card-header>
+    <div class="row">
+      <div class="col-sm-6">Les Causes de décès</div>
+      <div class="col-sm-6"><button (click)="save()" class="btn btn-outline-primary fa-pull-right" ><i class="fa fa-plus-circle"></i> Add</button></div></div>
+  </nb-card-header>
+  <nb-card-body>
+    <div class="row">
+      <div class="col-sm-6">
+        <div class="form-group">
+          <label  class="label">Code</label>
+          <input [(ngModel)]="Cause.code" class="form-control" type="string" nbInput fullWidth
+                 id="remarque" placeholder="code">
+
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="form-group">
+          <label  class="label">Description</label>
+          <textarea  [(ngModel)]="Cause.description" class="form-control"  type="string"  fullWidth
+                  placeholder="Description" >
+          </textarea>
+
+        </div>
+      </div>
+    </div>
+
+
+
+</nb-card-body>
+</nb-card>
+
+<nb-card>
+  <nb-card-header>
+    <div class="row">
+      <div class="col-sm-6">
+       Les causes de Décès
+      </div>
+    </div>
+  </nb-card-header>
+  <nb-card-body>
+
+    <ng2-smart-table
+      (createConfirm)="createConfirm($event)"
+      [settings]="settings"
+      [source]="source"
+      (deleteConfirm)="onDeleteConfirm($event)"
+      (editConfirm)="onEditConfirm($event)">
+    </ng2-smart-table>
+  </nb-card-body>
+</nb-card>
+
+
+
+
