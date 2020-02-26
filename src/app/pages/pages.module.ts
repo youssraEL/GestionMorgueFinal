@@ -15,6 +15,12 @@ import { PagesMenu } from './pages-menu';
 import { ECommerceModule } from './e-commerce/e-commerce.module';
 import { NbMenuModule } from '@nebular/theme';
 import { AuthModule } from '../@auth/auth.module';
+import { BulletinsDMComponent } from './bulletins-dm/bulletins-dm.component';
+import { DecedesComponent } from './bulletins-dm/decedes/decedes.component';
+import { DocumentsAdminComponent } from './documents-admin/documents-admin.component';
+import {BulletinsDMModule} from './bulletins-dm/bulletins-dm.module';
+import {DocumentsAdminModule} from './documents-admin/documents-admin.module';
+import {CertificatModule} from './certificat/certificat.module';
 
 const PAGES_COMPONENTS = [
   PagesComponent,
@@ -25,6 +31,9 @@ const PAGES_COMPONENTS = [
     PagesRoutingModule,
     ThemeModule,
     DashboardModule,
+    BulletinsDMModule,
+    DocumentsAdminModule,
+    CertificatModule,
     ECommerceModule,
     NbMenuModule,
     MiscellaneousModule,

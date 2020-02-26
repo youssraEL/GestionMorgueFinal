@@ -1,0 +1,62 @@
+
+
+<nb-card>
+  <nb-card-header>
+    <div class="row">
+      <div class="col-sm-6"> Certificat Enterrement</div>
+      <div class="col-sm-6"><button (click)="save()" class="btn btn-outline-primary fa-pull-right" ><i class="fa fa-plus-circle"></i> Add</button></div></div>
+  </nb-card-header>
+  <nb-card-body>
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="form-group">
+          <label  class="label">Défunt</label>
+          <input [(ngModel)]="Enterrement.defunt" class="form-control" type="string" nbInput fullWidth
+                 id="defunt" placeholder="Defunt">
+        </div>
+      </div>
+      <div class="col-sm-12">
+        <div class="form-group">
+          <label  class="label">Ville</label>
+          <input [(ngModel)]="Enterrement.ville" class="form-control" type="string" nbInput fullWidth
+                 id="centre" placeholder="Ville">
+
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="form-group">
+          <label  class="label">Date déclaration</label>
+          <input [(ngModel)]="Enterrement.declaration" class="form-control" type="Date" nbInput fullWidth
+                 id="dateDec" placeholder="Declarant">
+
+        </div>
+      </div>
+    </div>
+  </nb-card-body>
+</nb-card>
+
+<nb-card>
+  <nb-card-header>
+    <div class="row">
+      <div class="col-sm-6">
+        Certificat Enterrement
+      </div>
+    </div>
+  </nb-card-header>
+  <nb-card-body>
+
+    <ng2-smart-table
+      [settings]="settings"
+      [source]="source"
+      (deleteConfirm)="onDeleteConfirm($event)"
+      (editConfirm)="onEditConfirm($event)"
+      (createConfirm)="createConfirm($event)">
+    </ng2-smart-table>
+  </nb-card-body>
+</nb-card>
+
+
+
+

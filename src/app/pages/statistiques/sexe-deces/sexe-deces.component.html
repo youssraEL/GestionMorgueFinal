@@ -1,0 +1,33 @@
+<nb-card>
+  <nb-card-header>
+    <div class="row">
+      <div class="col-sm-6">Statistique sur la mrtalité des femmes et des hommes</div>
+      <div class="col-sm-6">
+        <button style="margin-top: 29px; width: 70px;" (click)="searchFor()" class="btn btn-primary float-right">
+          <i class="fa fa-chart-bar"></i>
+        </button>
+      </div>
+    </div>
+  </nb-card-header>
+
+  <nb-card-body>
+
+    <div class="row">
+      <div class="col-sm-3">
+        <label class="label" for="chart">Type de graphique</label>
+        <select [(ngModel)]="stackedChart.typeChart" id="chart" class="form-control float-left md" fullWidth>
+          <option *ngFor="let type of chartType" [ngValue]="type.type">{{ type.name }}</option>
+        </select></div>
+    </div>
+    <google-chart
+      [title]="stackedChart.title"
+      [type]="stackedChart.typeChart"
+      [data]="stackedChart.data"
+      [columnNames]="stackedChart.columnNames"
+      [options]="stackedChart.options"
+      [width]="stackedChart.width"
+      [height]="stackedChart.height">
+    </google-chart>
+
+  </nb-card-body>
+</nb-card>

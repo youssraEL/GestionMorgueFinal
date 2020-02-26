@@ -1,0 +1,96 @@
+<nb-card>
+  <nb-card-header>
+    <div class="row">
+      <div class="col-sm-6">Ajouter un certificat médico_Légal</div>
+      <div class="col-sm-6"><button (click)="save()" class="btn btn-outline-primary fa-pull-right" ><i class="fa fa-plus-circle"></i> Add</button></div></div>
+  </nb-card-header>
+  <nb-card-body>
+    <div class="row">
+      <div class="col-sm-6">
+        <div class="form-group">
+          <label  class="label">Médecin</label>
+          <nb-select  [(ngModel)]="MedNom" class="type-select "  nbSelect fullWidth
+                      placeholder="Médecin" >
+            <nb-option *ngFor="let t of NomMedecin " [value]="t.id">{{t.nom}} {{t.prenom}}</nb-option>
+          </nb-select>
+
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="form-group">
+          <label  class="label">Défunt</label>
+          <nb-select  [(ngModel)]="defunt" class="type-select "  nbSelect fullWidth
+                      placeholder="Défunt" >
+            <nb-option *ngFor="let t of  NomDecede " [value]="t.id">{{t.nom}} {{t.prenom}}</nb-option>
+          </nb-select>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-6">
+        <div class="form-group">
+          <label  class="label">Déclarant</label><br>
+          <input [(ngModel)]="Medicolegal.declarant" class="form-control" ng-required="expression" type="string" nbInput fullWidth
+                 id="dec" placeholder="Déclarant">
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="form-group">
+          <label  class="label">CIN Déclarant</label><br>
+          <input [(ngModel)]="Medicolegal.CIN" class="form-control" ng-required="expression" type="string" nbInput fullWidth
+                 id="cin" placeholder="CIN Déclarant">
+
+
+
+
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-6">
+        <div class="form-group">
+          <label  class="label">Adresse Déclarant</label><br>
+          <input [(ngModel)]="Medicolegal.address" class="form-control"  type="string" nbInput fullWidth
+                 id="adresse" placeholder="Adresse Déclarant">
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="form-group">
+          <label  class="label">Date déclaration</label>
+          <input [(ngModel)]="Medicolegal.declaration" class="form-control"  type="Date" nbInput fullWidth
+                 id="datedec" placeholder="Date déclaration">
+
+        </div>
+      </div>
+
+    </div>
+  </nb-card-body>
+
+</nb-card>
+
+<nb-card>
+  <nb-card-header>
+    <div class="row">
+      <div class="col-sm-6">
+        Certificat médico_Légal
+      </div>
+    </div>
+  </nb-card-header>
+  <nb-card-body>
+
+    <ng2-smart-table
+      (createConfirm)="createConfirm($event)"
+      [settings]="settings"
+      [source]="source"
+      (deleteConfirm)="onDeleteConfirm($event)"
+      (editConfirm)="onEditConfirm($event)">
+    </ng2-smart-table>
+  </nb-card-body>
+</nb-card>
+
+
+
+
+

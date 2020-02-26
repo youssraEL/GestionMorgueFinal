@@ -1,0 +1,77 @@
+
+
+<nb-card>
+  <nb-card-header>
+    <div class="row">
+      <div class="col-sm-6">Apercu du corps</div>
+      <div class="col-sm-6"><button (click)="save()" class="btn btn-outline-primary fa-pull-right" ><i class="fa fa-plus-circle"></i> Add</button></div></div>
+  </nb-card-header>
+  <nb-card-body>
+    <div class="row">
+      <div class="col-sm-6">
+        <div class="form-group">
+          <label  class="label">Défunt</label>
+          <input [(ngModel)]="ApercuCorps.defunt" class="form-control" type="string" nbInput fullWidth
+                 id="defunt" placeholder="Défunt">
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="form-group">
+          <label  class="label">Centre médico-légal</label>
+          <input [(ngModel)]="ApercuCorps.CenterMedicoLegal" class="form-control" type="string" nbInput fullWidth
+                 id="centre" placeholder="Centre médico-légal">
+
+        </div>
+      </div>
+
+
+    </div>
+
+    <div class="row">
+      <div class="col-sm-6">
+        <div class="form-group">
+          <label  class="label">Médcin/ Assistant de santé</label>
+          <nb-select [(ngModel)]="MedecinID"  class="type-select " nbSelect fullWidth
+                     placeholder="Medcin/ Assistant de santé">
+            <nb-option *ngFor="let t of NomMedcin" [value]="t.id">{{t.nom}} {{t.prenom}}</nb-option>
+          </nb-select>
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="form-group">
+          <label  class="label">Date déclaration</label>
+          <input [(ngModel)]="ApercuCorps.dateDeclaration" class="form-control" type="Date" nbInput fullWidth
+                 id="dateDec" placeholder="Declarant">
+
+        </div>
+      </div>
+    </div>
+
+
+
+  </nb-card-body>
+</nb-card>
+
+<nb-card>
+  <nb-card-header>
+    <div class="row">
+      <div class="col-sm-6">
+        Apercu du corps
+      </div>
+    </div>
+  </nb-card-header>
+  <nb-card-body>
+
+    <ng2-smart-table
+      [settings]="settings"
+      [source]="source"
+      (deleteConfirm)="onDeleteConfirm($event)"
+      (editConfirm)="onEditConfirm($event)"
+      (createConfirm)="createConfirm($event)">
+    </ng2-smart-table>
+  </nb-card-body>
+</nb-card>
+
+
+
+

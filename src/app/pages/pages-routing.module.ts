@@ -25,24 +25,29 @@ const routes: Routes = [{
       component: DashboardComponent,
     },
     {
-      path: 'users',
-      loadChildren: () => import('./users/users.module')
-        .then(m => m.UsersModule),
+      path: 'bulletins-dm',
+      loadChildren: () => import('./bulletins-dm/bulletins-dm.module')
+        .then(m => m.BulletinsDMModule),
     },
     {
-      path: 'layout',
-      loadChildren: () => import('./layout/layout.module')
-        .then(m => m.LayoutModule),
+      path: 'certificats',
+      loadChildren: () => import('./certificat/certificat.module')
+        .then(m => m.CertificatModule),
     },
     {
-      path: 'forms',
-      loadChildren: () => import('./forms/forms.module')
-        .then(m => m.FormsModule),
+      path: 'documents-admin',
+      loadChildren: () => import('./documents-admin/documents-admin.module')
+        .then(m => m.DocumentsAdminModule),
     },
     {
-      path: 'ui-features',
-      loadChildren: () => import('./ui-features/ui-features.module')
-        .then(m => m.UiFeaturesModule),
+      path: 'rapport',
+      loadChildren: () => import('./rapport/rapport.module')
+        .then(m => m.RapportModule),
+    },
+    {
+      path: 'statistiques',
+      loadChildren: () => import('./statistiques/statistiques.module')
+        .then(m => m.StatistiquesModule),
     },
     {
       path: 'modal-overlays',
