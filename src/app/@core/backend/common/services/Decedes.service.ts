@@ -47,7 +47,7 @@ export class DecedesService {
 
   // Get
   public getAll(): Observable<any> {
-    return this.http.get(this.baseurl + '/getAll/'  )
+    return this.http.get(this.baseurl + '/getAll'  )
       .pipe(
         retry(1),
         catchError(this.errorHandl),
@@ -55,6 +55,14 @@ export class DecedesService {
   }
   public getById(id: number) {
     return this.http.get(this.baseurl + '/getById/' + id, this.httpOptions )
+      .pipe(
+        retry(1),
+        catchError(this.errorHandl),
+      );
+  }
+
+  public getByNumRegister(NumRegister: string) {
+    return this.http.get(this.baseurl + '/getByNumRegister/' + NumRegister, this.httpOptions )
       .pipe(
         retry(1),
         catchError(this.errorHandl),
@@ -72,6 +80,14 @@ export class DecedesService {
 
   public getByNom(Nom: string) {
     return this.http.get(this.baseurl + '/getByNom/' + Nom, this.httpOptions )
+      .pipe(
+        retry(1),
+        catchError(this.errorHandl),
+      );
+  }
+
+  public getBySexeEquals(sexe: string) {
+    return this.http.get(this.baseurl + '/getBySexeEquals/' + sexe, this.httpOptions )
       .pipe(
         retry(1),
         catchError(this.errorHandl),

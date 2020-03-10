@@ -61,11 +61,12 @@ export class MedcinsComponent implements OnInit {
       this.source = data;
     });
   }
-
+  isAdmin: boolean;
   ngOnInit() {
     this.userservice.getCurrentUser().subscribe(data => {
       console.log(data);
       console.log(data.role);
+      this.isAdmin = data.role.includes('ADMIN');
     });
     this.init();
   }
@@ -88,32 +89,39 @@ export class MedcinsComponent implements OnInit {
   }
 
   createConfirm(event) {
-    this.service.getAll().subscribe(data => {
+    if (this.isAdmin) {
+      this.service.getAll().subscribe(data => {
         event.confirm.resolve(event.newData);
-        this.service.create(event.newData).subscribe(obj => {});
-         this.init();
-    });
+        this.service.create(event.newData).subscribe(obj => {
+        });
+        this.init();
+      });
+    }
   }
 
   onEditConfirm(event) {
-    this.service.getAll().subscribe(data => {
-      console.log(data);
+    if (this.isAdmin) {
+      this.service.getAll().subscribe(data => {
+        console.log(data);
         event.confirm.resolve(event.newData);
         this.service.update(event.newData).subscribe(obj => {
         });
         window.alert('les donnes sont change avec succes');
         this.init();
-    });
+      });
+    }
   }
   onDeleteConfirm(event) {
-    if (window.confirm('Are you sure you want to delete?')) {
-      event.confirm.resolve(event.data);
-      this.service.delete(event.data.id).subscribe(data => {
-        console.log(data);
-        this.init();
-      });
-    } else {
-      event.confirm.reject(event.data);
+    if (this.isAdmin) {
+      if (window.confirm('Are you sure you want to delete?')) {
+        event.confirm.resolve(event.data);
+        this.service.delete(event.data.id).subscribe(data => {
+          console.log(data);
+          this.init();
+        });
+      } else {
+        event.confirm.reject(event.data);
+      }
     }
   }
 }

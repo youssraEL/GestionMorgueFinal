@@ -39,15 +39,15 @@ const routes: Routes = [{
       loadChildren: () => import('./documents-admin/documents-admin.module')
         .then(m => m.DocumentsAdminModule),
     },
+    // {
+    //   path: 'statistiques',
+    //   loadChildren: () => import('./statistiques/statistiques.module')
+    //     .then(m => m.StatistiquesModule),
+    // },
     {
       path: 'rapport',
       loadChildren: () => import('./rapport/rapport.module')
         .then(m => m.RapportModule),
-    },
-    {
-      path: 'statistiques',
-      loadChildren: () => import('./statistiques/statistiques.module')
-        .then(m => m.StatistiquesModule),
     },
     {
       path: 'modal-overlays',

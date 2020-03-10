@@ -61,6 +61,7 @@ export class CauseDecesComponent implements OnInit {
     this.userservice.getCurrentUser().subscribe(data => {
       console.log(data);
       console.log(data.role);
+      this.isAdmin = data.role.includes('ADMIN');
     });
     this.init();
   }
@@ -92,35 +93,43 @@ export class CauseDecesComponent implements OnInit {
   //   });
   //   this.init();
   // }
+  isAdmin: boolean;
 
   createConfirm(event) {
-    this.service.getAll().subscribe(data => {
-      event.confirm.resolve(event.newData);
-      this.service.create(event.newData).subscribe(obj => {});
+    if (this.isAdmin) {
+      this.service.getAll().subscribe(data => {
+        event.confirm.resolve(event.newData);
+        this.service.create(event.newData).subscribe(obj => {
+        });
+        this.init();
+      });
       this.init();
-    });
-    this.init();
+    }
   }
 
   onEditConfirm(event) {
-    this.service.getAll().subscribe(data => {
-      console.log(data);
-      event.confirm.resolve(event.newData);
-      this.service.update(event.newData).subscribe(obj => {
+    if (this.isAdmin) {
+      this.service.getAll().subscribe(data => {
+        console.log(data);
+        event.confirm.resolve(event.newData);
+        this.service.update(event.newData).subscribe(obj => {
+        });
+        this.init();
+        window.alert('les donnes sont change avec succes');
       });
-      this.init();
-      window.alert('les donnes sont change avec succes');
-    });
+    }
   }
   onDeleteConfirm(event) {
-    if (window.confirm('Are you sure you want to delete?')) {
-      event.confirm.resolve(event.data);
-      this.service.delete(event.data.id).subscribe(data => {
-        console.log(data);
-        this.init();
-      });
-    } else {
-      event.confirm.reject(event.data);
+    if (this.isAdmin) {
+      if (window.confirm('Are you sure you want to delete?')) {
+        event.confirm.resolve(event.data);
+        this.service.delete(event.data.id).subscribe(data => {
+          console.log(data);
+          this.init();
+        });
+      } else {
+        event.confirm.reject(event.data);
+      }
     }
   }
 }

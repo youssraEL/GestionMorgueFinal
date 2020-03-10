@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {Bulletins} from '../../../@core/backend/common/model/Bulletins';
 import {BulletinsService} from '../../../@core/backend/common/services/Bulletins.service';
 import {LocalDataSource} from 'ng2-smart-table';
@@ -9,12 +9,16 @@ import {SmartTableData} from '../../../@core/interfaces/common/smart-table';
 import {UsersService} from '../../../@core/backend/common/services/users.service';
 import {Medecins} from '../../../@core/backend/common/model/Medecins';
 import {Decedes} from '../../../@core/backend/common/model/Decedes';
+import pdfMake from 'pdfmake/build/pdfmake';
+import pdfFonts from 'pdfmake/build/vfs_fonts';
+import {DecedesList} from '../../../@core/backend/common/model/DecedesList';
+pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 @Component({
   selector: 'ngx-bulletins',
   templateUrl: './bulletins.component.html',
   styleUrls: ['./bulletins.component.scss'],
-  providers: [ BulletinsService, DecedesService, MedecinsService],
+  providers: [ BulletinsService, DecedesService, MedecinsService, UsersService],
 })
 
 export class BulletinsComponent implements OnInit {
@@ -237,6 +241,8 @@ export class BulletinsComponent implements OnInit {
   };
   private source: Bulletins;
   private sourceM: Medecins;
+  isAdmin: boolean;
+  DecedeHumain = [];
 
   constructor(private service: BulletinsService, private serviceD: DecedesService, private serviceM: MedecinsService,
               private serviceS: SmartTableData, private userservice: UsersService ) {
@@ -258,11 +264,11 @@ export class BulletinsComponent implements OnInit {
       this.sourceM = data;
     });
   }
-
   ngOnInit() {
     this.userservice.getCurrentUser().subscribe(data => {
-      console.log(data);
+      // console.log(data);
       console.log(data.role);
+      this.isAdmin = data.role.includes('ADMIN');
     });
     this.init();
     this.initM();
@@ -283,85 +289,403 @@ export class BulletinsComponent implements OnInit {
     this.Bulletins = new Bulletins();
   }
   createConfirm(event) {
-    this.service.getAll().subscribe(data => {
-      event.confirm.resolve(event.newData);
-      this.service.create(event.newData).subscribe(obj => {});
-     // this.init();
-    });
+    if (this.isAdmin) {
+      this.service.getAll().subscribe(data => {
+        event.confirm.resolve(event.newData);
+        this.service.create(event.newData).subscribe(obj => {
+        });
+        // this.init();
+      });
+    }
   }
   onEditConfirm(event) {
-    this.service.getAll().subscribe(data => {
-      console.log(data);
-      event.confirm.resolve(event.newData);
-      this.service.update(event.newData).subscribe(obj => {
+    if (this.isAdmin) {
+      this.service.getAll().subscribe(data => {
+        console.log(data);
+        event.confirm.resolve(event.newData);
+        this.service.update(event.newData).subscribe(obj => {
+        });
+        window.alert('les donnes sont change avec succes');
       });
-      window.alert('les donnes sont change avec succes');
-    });
+    }
   }
   onDeleteConfirm(event) {
-    if (window.confirm('Are you sure you want to delete?')) {
-      event.confirm.resolve(event.data);
-      this.service.delete(event.data.id).subscribe(data => {
-        console.log(data);
-      });
-    } else {
-      event.confirm.reject(event.data);
+    if (this.isAdmin) {
+      if (window.confirm('Are you sure you want to delete?')) {
+        event.confirm.resolve(event.data);
+        this.service.delete(event.data.id).subscribe(data => {
+          console.log(data);
+        });
+      } else {
+        event.confirm.reject(event.data);
+      }
     }
   }
   createConfirmD(event) {
-    this.serviceD.getAll().subscribe(data => {
-      event.confirm.resolve(event.newData);
-      this.serviceD.create(event.newData).subscribe(obj => {});
-       this.initD();
-    });
+    if (this.isAdmin) {
+      this.serviceD.getAll().subscribe(data => {
+        event.confirm.resolve(event.newData);
+        this.serviceD.create(event.newData).subscribe(obj => {
+        });
+        this.initD();
+      });
+    }
   }
   onEditConfirmD(event) {
-    this.serviceD.getAll().subscribe(data => {
-      console.log(data);
-      event.confirm.resolve(event.newData);
-      this.serviceD.update(event.newData).subscribe(obj => {
-        this.initD();
+    if (this.isAdmin) {
+      this.serviceD.getAll().subscribe(data => {
+        console.log(data);
+        event.confirm.resolve(event.newData);
+        this.serviceD.update(event.newData).subscribe(obj => {
+          this.initD();
+        });
+        window.alert('les donnes sont change avec succes');
       });
-      window.alert('les donnes sont change avec succes');
-    });
+    }
   }
   onDeleteConfirmD(event) {
-    if (window.confirm('Are you sure you want to delete?')) {
-      event.confirm.resolve(event.data);
-      this.serviceD.delete(event.data.id).subscribe(data => {
-        console.log(data);
-        this.initD();
-      });
-    } else {
-      event.confirm.reject(event.data);
+    if (this.isAdmin) {
+      if (window.confirm('Are you sure you want to delete?')) {
+        event.confirm.resolve(event.data);
+        this.serviceD.delete(event.data.id).subscribe(data => {
+          console.log(data);
+          this.initD();
+        });
+      } else {
+        event.confirm.reject(event.data);
+      }
     }
   }
   createMedcin(event) {
-    this.serviceM.getAll().subscribe(data => {
-      event.confirm.resolve(event.newData);
-      this.serviceM.create(event.newData).subscribe(obj => {});
-      this.initM();
-    });
+    if (this.isAdmin) {
+      this.serviceM.getAll().subscribe(data => {
+        event.confirm.resolve(event.newData);
+        this.serviceM.create(event.newData).subscribe(obj => {
+        });
+        this.initM();
+      });
+    }
   }
   onEditMedcin(event) {
-    this.serviceM.getAll().subscribe(data => {
-      console.log(data);
-      event.confirm.resolve(event.newData);
-      this.serviceM.update(event.newData).subscribe(obj => {
-        this.initM();
+    if (this.isAdmin) {
+      this.serviceM.getAll().subscribe(data => {
+        console.log(data);
+        event.confirm.resolve(event.newData);
+        this.serviceM.update(event.newData).subscribe(obj => {
+          this.initM();
+        });
+        window.alert('les donnes sont change avec succes');
       });
-      window.alert('les donnes sont change avec succes');
-    });
+    }
   }
   onDeleteMedcin(event) {
-    if (window.confirm('Are you sure you want to delete?')) {
-      event.confirm.resolve(event.data);
-      this.serviceM.delete(event.data.id).subscribe(data => {
-        console.log(data);
-        this.initM();
-      });
-    } else {
-      event.confirm.reject(event.data);
+    if (this.isAdmin) {
+      if (window.confirm('Are you sure you want to delete?')) {
+        event.confirm.resolve(event.data);
+        this.serviceM.delete(event.data.id).subscribe(data => {
+          console.log(data);
+          this.initM();
+        });
+      } else {
+        event.confirm.reject(event.data);
+      }
     }
+  }
+
+  generatePdf(action = 'open') {
+    const documentDefinition = this.getDocumentDefinition();
+    switch (action) {
+      case 'open': pdfMake.createPdf(documentDefinition).open(); break;
+      case 'print': pdfMake.createPdf(documentDefinition).print(); break;
+      case 'download': pdfMake.createPdf(documentDefinition).download(); break;
+      default: pdfMake.createPdf(documentDefinition).open(); break;
+    }
+
+  }
+
+  private getDocumentDefinition() {
+
+    // sessionStorage.setItem('resume', JSON.stringify());
+    return {
+      content: [
+        {
+          table: {
+            widths: '*',
+            body: [
+              [
+                {
+                  text: 'ROYAUME DU MAROC \n MINISTERE DE LA SANTE PUBLIQUE',
+                  fontSize: 10,
+                  alignment: 'left',
+                  border: [true, true, false, false],
+                },
+                {
+                  text: 'Province/ préfecture ' + this.Bulletins.province + '\n Cercle ' + this.Bulletins.cercle +
+                    '\n Municipalité /centre/commune' + this.Bulletins.centre,
+                  fontSize: 10,
+                  border: [false, true, true, false],
+                },
+              ],
+              [
+                {
+                  colSpan: 2,
+                  text: 'BULLETIN DE DECES ET DE MORTINATALITE',
+                  fontSize: 20,
+                  alignment: 'center',
+                  margin: [0, 10, 0, 20],
+                  bold: true,
+                  border: [true, false, true, false],
+                },
+                '',
+              ],
+              [
+                {
+                  colSpan: 2,
+                  border: [true, false, true, false],
+                  fontSize: 12,
+                  text: 'Décès survenu le:  ' + this.dd + ' à  '  + this.h + ' heure à  ' + this.l + '  \n' + 'Nom et prénom de décédé:  ' + this.n + ' ' + this.p +
+                    '\n' + 'Sexe:   ' + this.s + '  Nationalite: ' + this.na
+                  + '\n Domicile  ' + this.a + '\n age:   \n ',
+                },
+                '',
+              ],
+              [
+                {text: '',
+                  border: [true, false, false, false],
+                },
+                {
+                  border: [false, false, true, false],
+                  fontSize: 9,
+                  text: 'Le Docteur en médecine soussigné \n nom signature \n\n',
+                  alignment: 'center',
+                },
+              ],
+              [
+                {
+                  text: 'N° de l\'acte au registre des décès ' + this.numR +
+                    '\n de l\'hopital/ DMH/Commune ',
+                  colSpan: 2,
+                  fontSize: 12,
+                  border: [true, false, true, true],
+                },
+                '',
+              ],
+            ],
+          },
+        },
+        {
+          text: '\n\n',
+        },
+        {
+          table: {
+            widths: ['30%' , '70%'],
+            body: [
+              [
+                {
+                  colSpan: 2,
+                  text: 'PARTIE ANONYME \n' +
+                    'DESTINEE AU MINISTERE DE LA SANTE PUBLIQUE? SERVICE DES ETUDES \n ET DE L\'INFORMATION SANTAIRE',
+                  alignment: 'center',
+                  fontSize: 10,
+                },
+                '',
+              ],
+              [
+                {
+                  colSpan: 2,
+                  text: 'I- IDENTIFICATION \n\n' +
+                    'N° de l\'acte au registre  ' + this.numR + '  N° de compostage: ',
+                  border: [true, false, true, false],
+                },
+                '',
+              ],
+              [
+                {
+                  text: 'Lieu de déclaration:',
+                  border: [true, false, false, false],
+                },
+                {border: [false, false, true, false],
+                  fontSize: 12,
+                  // margin: [0, 10, 0, 10],
+                  ul: [
+                    'Province ou Prefecture: ',
+                    'Cercle: ',
+                    'Municipalité /Centre/ Commune: ',
+                  ],
+                },
+              ],
+              [
+                {
+                  border: [true, false, false, false],
+                  text: 'Domicile habituel:',
+                },
+                {border: [false, false, true, false],
+                  fontSize: 12,
+                  // margin: [0, 10, 0, 10],
+                  ul: [
+                    'Province ou Prefecture: ',
+                    'Cercle: ',
+                    'Municipalité /Centre/ Commune: ',
+                  ],
+                },
+              ],
+              [
+                {
+                  colSpan: 2,
+                  text: 'Milieu de résidnce:',
+                  border: [true, false, true, true],
+                },
+                '',
+              ],
+              [
+                  {
+                    colSpan: 2,
+                    text: 'II- CARACTERISTIQUES \n\n' +
+                      'Type de bulletin : ' + this.Bulletins.typeBulletin + '\n Date de décès  ' + this.dd ,
+                    border: [true, false, true, false],
+                  },
+                  '',
+              ],
+              [
+                {
+                  colSpan: 2,
+                  border: [true, false, true, false],
+                  text: 'Lieu où de décès esst servenu :' + this.l ,
+                },
+                '',
+              ],
+              [
+                {
+                  colSpan: 2,
+                  border: [true, false, true, false],
+                  text: 'Sexe :' + this.s ,
+                },
+                '',
+              ],
+              [
+                {
+                  colSpan: 2,
+                  border: [true, false, true, false],
+                  text: 'Age :',
+                },
+                '',
+              ],
+              [
+                {
+                  colSpan: 2,
+                  border: [true, false, true, false],
+                  text: 'Nationalité :' + this.na ,
+                },
+                '',
+              ],
+              [
+                {
+                  colSpan: 2,
+                  border: [true, false, true, false],
+                  text: 'Etat matrimonial :' + this.e ,
+                },
+                '',
+              ], [
+                {
+                  colSpan: 2,
+                  border: [true, false, true, true],
+                  text: 'Profession :' + this.pr ,
+                },
+                '',
+              ],
+            ],
+          },
+        },
+        {
+          text: '\n',
+          margin: [0, 300, 0, 300],
+        },
+        {
+          table: {
+            widths: '*',
+            body: [
+              [
+                {
+                  colSpan: 2,
+                 text: 'III RENSEIGNEMENTS SUR LA CAUSE DU DECES OU DE MORTINATALITE',
+                  border: [true, true, true, false],
+                },
+                '',
+              ],
+              [
+                {
+                  text: 'Mort naturelle',
+                  border: [true, false, false, false],
+                },
+                {
+                  border: [false, false, true, false],
+                 ul: [
+                   'Cause immédiate',
+                   'Cause initiale',
+                 ],
+                },
+              ],
+              [
+                {
+                  border: [true, false, false, false],
+                  text: 'Mort non naturelle \n',
+                },
+                {
+                  border: [false, false, true, false],
+                  ul: [
+                    '\nNature de traumatisme',
+                    'Nature d\'intoxication',
+                    'Autre\n',
+                  ],
+                },
+              ],
+              [
+                {
+                  border: [true, false, true, true],
+                  colSpan: 2,
+                  text: 'Constatation faite par',
+                },
+                '',
+              ],
+            ],
+          },
+        },
+       ],
+      styles: {
+        name: {
+          fontSize: 16,
+          bold: true,
+        },
+      },
+    };
+  }
+n: string;
+  p: string;
+  dd: Date;
+  h: string;
+  s: string;
+  na: string;
+  a: string;
+  dn: Date;
+  numR: string;
+  l: string;
+  e: string;
+  pr: string;
+  add() {
+    this.serviceD.getByNumRegister(this.Bulletins.cercle).subscribe(obj => {
+      this.DecedeHumain.push(new DecedesList(obj));
+      this.l = obj.lieuxDeces;
+      this.n = obj.nom;
+      this.p = obj.prenom;
+      this.dd = obj.dateDeces;
+      this.h = obj.heure;
+      this.s = obj.sexe;
+      this.na = obj.nationalite;
+      this.a = obj.adresse;
+      this.dn = obj.dateNaissance;
+      this.numR = obj.NumRegister;
+      this.e = obj.Etat;
+      this.pr = obj.pr;
+    });
   }
 }

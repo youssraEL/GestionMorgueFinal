@@ -3,7 +3,8 @@
   <nb-card-header>
     <div class="row">
       <div class="col-sm-6">Ajouter un Medecin</div>
-      <div class="col-sm-6"><button (click)="save()" class="btn btn-outline-primary fa-pull-right" ><i class="fa fa-plus-circle"></i> Add</button></div></div>
+      <div *ngIf="isAdmin"> <div class="col-sm-6"><button (click)="save()" class="btn btn-outline-primary fa-pull-right" ><i class="fa fa-plus-circle"></i> Add</button></div></div>
+    </div>
   </nb-card-header>
   <nb-card-body>
     <div class="row">

@@ -10,8 +10,10 @@ import { PivotComponent } from './pivot/pivot.component';
 import { SexeDecesComponent } from './sexe-deces/sexe-deces.component';
 import { RegionComponent } from './region/region.component';
 import { SelonCauseComponent } from './selon-cause/selon-cause.component';
-import {NbCardModule} from "@nebular/theme";
-import {FormsModule} from "@angular/forms";
+import {NbCardModule} from '@nebular/theme';
+import {FormsModule} from '@angular/forms';
+import {ChartsModule} from '../charts/charts.module';
+import {NgxEchartsCoreModule} from 'ngx-echarts/core';
 
 
 @NgModule({
@@ -25,6 +27,8 @@ import {FormsModule} from "@angular/forms";
     StatistiquesRoutingModule,
     NbCardModule,
     FormsModule,
+    ChartsModule,
+    NgxEchartsCoreModule,
   ],
 })
 export class StatistiquesModule { }

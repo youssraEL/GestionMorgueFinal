@@ -1,11 +1,14 @@
 
 <nb-card>
-  <nb-card-header>
+  <nb-card-header class="hostt">
     <div class="row">
       <div class="col-sm-6">Ajouter les informations d'un décéde</div>
-      <div class="col-sm-6"><button (click)="save()" class="btn btn-outline-primary fa-pull-right" ><i class="fa fa-plus-circle"></i> Add</button></div></div>
+      <div *ngIf="isAdmin">
+      <div class="col-sm-6"><button (click)="save()" class="btn btn-outline-primary fa-pull-right" ><i class="fa fa-plus-circle"></i> Add</button></div>
+      </div>
+      </div>
   </nb-card-header>
-  <nb-card-body>
+  <nb-card-body class="host">
     <div class="row">
       <div class="col-sm-6">
         <div class="form-group">
@@ -26,15 +29,6 @@
     </div>
 
     <div class="row">
-
-      <div class="col-sm-6">
-        <div class="form-group">
-          <label  class="label">Fille ou fils de : </label>
-          <input [(ngModel)]="decede.fils" class="form-control" type="string" nbInput fullWidth
-                 id="fils" placeholder="Fille ou fils de ">
-
-        </div>
-      </div>
       <div class="col-sm-6">
         <div class="form-group">
           <label  class="label">Sexe</label>
@@ -42,6 +36,15 @@
                      placeholder="Sexe">
             <nb-option *ngFor="let t of sexe" [value]="t">{{t}}</nb-option>
           </nb-select>
+
+        </div>
+      </div>
+
+      <div class="col-sm-6">
+        <div class="form-group">
+          <label  class="label">Date décès</label>
+          <input [(ngModel)]="decede.dateDeces" class="form-control" type="Date" nbInput fullWidth
+                 id="dateD" placeholder="Date décès">
 
         </div>
       </div>
@@ -62,6 +65,118 @@
                  id="DateNai" placeholder="Date de naissance">
 
         </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12">
+        <div *ngIf="this.decede.sexe==='Femme' &&(this.getAgeParAnnee(this.decede.dateNaissance, this.decede.dateDeces)<54) &&(this.getAgeParAnnee(this.decede.dateNaissance, this.decede.dateDeces)>12);then contenu"></div>
+        <ng-template #contenu>
+          <div class="row">
+
+            <div class="col-sm-12">
+              <div class="form-group">
+                <label  class="label">Le décès est-il survenu pendant une grosesse ou moins d'un an après sa terminaison ?</label>
+                <nb-select [(ngModel)]="decesGrossesse"  class="type-select " nbSelect fullWidth>
+                  <nb-option *ngFor="let t of GrossesseList" [value]="t">{{t}}</nb-option>
+                </nb-select>
+
+              </div>
+            </div>
+
+          </div>
+
+        </ng-template>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-12">
+        <div *ngIf="decesGrossesse==='Oui';then conten"></div>
+        <ng-template #conten>
+          <div class="row">
+
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label  class="label">le décès de la femme est-il survenu</label>
+                <nb-select [(ngModel)]="decesFemme"  class="type-select " nbSelect fullWidth>
+                  <nb-option *ngFor="let t of decesFemmeList" [value]="t">{{t}}</nb-option>
+                </nb-select>
+
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label  class="label">La grossesse a-t-elle contribué au decès ?</label>
+                <nb-select [(ngModel)]="ContribueGros"  class="type-select " nbSelect fullWidth>
+                  <nb-option *ngFor="let t of GrossesseList" [value]="t">{{t}}</nb-option>
+                </nb-select>
+
+              </div>
+            </div>
+
+          </div>
+
+        </ng-template>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-12">
+        <div *ngIf="this.decede.mortNe===true ||(this.getAgeParJour(this.decede.dateNaissance, this.decede.dateDeces)<7);then res"></div>
+        <ng-template #res>
+          <div class="row">
+
+          <div class="col-sm-6">
+            <div class="form-group">
+              <label  class="label">Grossesse multiple</label>
+              <nb-select [(ngModel)]="Grossesse"  class="type-select " nbSelect fullWidth
+                         placeholder="Grossesse multiple">
+                <nb-option *ngFor="let t of GrossesseList" [value]="t">{{t}}</nb-option>
+              </nb-select>
+
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="form-group">
+              <label  class="label">age de la mère</label>
+              <input [(ngModel)]="AgeMere" class="form-control" type="string" nbInput fullWidth
+                     id="ageMere" placeholder="Age du mère">
+
+            </div>
+          </div>
+        </div>
+
+          <div class="row">
+
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label  class="label">Poids à la naissance</label>
+                <input [(ngModel)]="Poids" class="form-control" type="string" nbInput fullWidth
+                       id="poids" placeholder="Poids en grammes">
+
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label  class="label">Age gestationnel</label>
+                <input [(ngModel)]="AgeGesta" class="form-control" type="string" nbInput fullWidth
+                       id="ageGestationnel" placeholder="Age du mère">
+
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-12">
+              <div class="form-group">
+                <label  class="label">Maladie ou affection maternelle ayant affecté le foetus ou le nouveau-né</label>
+                <input [(ngModel)]="maladie" class="form-control" type="string" nbInput fullWidth
+                       id="maladie" placeholder="....">
+
+            </div>
+            </div>
+          </div>
+
+        </ng-template>
       </div>
     </div>
 
@@ -107,6 +222,15 @@
     </div>
 
     <div class="row">
+      <div class="col-sm-6">
+        <div class="form-group">
+          <label  class="label">Fille ou fils de : </label>
+          <input [(ngModel)]="decede.fils" class="form-control" type="string" nbInput fullWidth
+                 id="fils" placeholder="Fille ou fils de ">
+
+        </div>
+      </div>
+
 
       <div class="col-sm-6">
         <div class="form-group">
@@ -116,14 +240,7 @@
 
         </div>
       </div>
-      <div class="col-sm-6">
-        <div class="form-group">
-          <label  class="label">Date décès</label>
-          <input [(ngModel)]="decede.dateDeces" class="form-control" type="Date" nbInput fullWidth
-                 id="dateD" placeholder="Date décès">
 
-        </div>
-      </div>
     </div>
 
     <div class="row">
@@ -170,6 +287,48 @@
     </div>
 
     <div class="row">
+      <div class="col-sm-12">
+        <div *ngIf="(this.decede.causeMort === 'accident')
+         ||(this.decede.causeMort === 'traumatisme') || (this.decede.causeMort === 'homicide') || (this.decede.causeMort === 'suicide')
+          || (this.decede.causeMort === 'brûlure') || (this.decede.causeMort === 'noyade') || (this.decede.causeMort === 'intoxication');then resultt"></div>
+        <ng-template #resultt>
+          <div class="row">
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label  class="label">Date de survenue</label>
+                <input [(ngModel)]="DateServ" class="form-control" type="Date" nbInput fullWidth
+                       id="DateServ" placeholder="Date de survenue">
+
+              </div>
+            </div>
+
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label  class="label">Lieu de survenue</label>
+                <nb-select [(ngModel)]="LieuServ"  class="type-select " nbSelect fullWidth
+                           placeholder="Lieu de servenue">
+                  <nb-option *ngFor="let t of lieuList" [value]="t">{{t}}</nb-option>
+                </nb-select>
+
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-12">
+              <div class="form-group">
+                <label  class="label">Circonstances de servenue</label>
+                <input [(ngModel)]="CirconServ" class="form-control" type="string" nbInput fullWidth
+                       id="circonstances" placeholder="Circonstances de servenue">
+
+              </div>
+            </div>
+          </div>
+
+        </ng-template>
+      </div>
+    </div>
+
+    <div class="row">
 
       <div class="col-sm-6">
         <div class="form-group">
@@ -196,7 +355,86 @@
       <div class="col-sm-6">
         <nb-checkbox id="defaultCheck1" [(ngModel)]="decede.obstacle">Obstacle medicolégal</nb-checkbox>
       </div>
+      <div class="col-sm-6">
+        <div class="form-group">
+          <label  class="label">Autopsie</label>
+          <nb-select [(ngModel)]="autopsie"  class="type-select " nbSelect fullWidth
+                     placeholder="Autopsie">
+            <nb-option *ngFor="let t of GrossesseList" [value]="t">{{t}}</nb-option>
+          </nb-select>
+        </div>
+      </div>
     </div>
+    <div class="row">
+      <div class="col-sm-12">
+        <div *ngIf="this.autopsie==='Oui';then resultauto"></div>
+        <ng-template #resultauto>
+          <div class="row">
+
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label  class="label">les résultats ont-ils été utilisés dans certification</label>
+                <nb-select [(ngModel)]="resultatsAutopsie"  class="type-select " nbSelect fullWidth
+                           placeholder="les resultats ...">
+                  <nb-option *ngFor="let t of GrossesseList" [value]="t">{{t}}</nb-option>
+                </nb-select>
+
+              </div>
+            </div>
+          </div>
+
+        </ng-template>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="form-group">
+          <label  class="label">Une operation a-t-elle été effectuées lors des 4 dernières semaines ?</label>
+          <nb-select [(ngModel)]="operation"  class="type-select " nbSelect fullWidth
+                     placeholder="Operation">
+            <nb-option *ngFor="let t of GrossesseList" [value]="t">{{t}}</nb-option>
+          </nb-select>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12">
+        <div *ngIf="this.operation==='Oui';then resOp"></div>
+        <ng-template #resOp>
+          <div class="row">
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label  class="label">La date d'operation</label>
+                <input [(ngModel)]="Dateop" class="form-control" type="Date" nbInput fullWidth
+                       id="dateOp" placeholder="La date d'operation">
+
+
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label  class="label">Motif d'operation</label>
+                <input [(ngModel)]="motifDop" class="form-control" type="string" nbInput fullWidth
+                       id="motif" placeholder="motif d'operation">
+
+
+              </div>
+            </div>
+          </div>
+
+        </ng-template>
+      </div>
+    </div>
+
+
+    <div class="row">
+      <div class="col-md-12">
+        <button (click)="generatePdf('open')"
+                class="btn btn-outline-primary fa-pull-right">
+          <span>PDF</span></button>
+      </div>
+    </div>
+    <!--    </div>-->
    </nb-card-body>
 </nb-card>
 
@@ -219,7 +457,6 @@
     </ng2-smart-table>
   </nb-card-body>
 </nb-card>
-
 
 
 

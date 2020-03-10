@@ -1,1 +1,111 @@
-<ngx-decedes></ngx-decedes>
+
+
+<nb-card>
+  <nb-card-header>
+    <div class="row">
+      <div class="col-sm-12">Attestation de décès</div>
+    </div>
+  </nb-card-header>
+  <nb-card-body>
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="form-group">
+          <label  class="label">Nom décédè</label>
+          <input [(ngModel)]="decede.nom" class="form-control" type="string" nbInput fullWidth
+                 id="Nom" placeholder="Nom décédè">
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+
+      <div class="col-sm-12">
+        <div class="form-group">
+          <label  class="label">Sexe</label>
+          <nb-select [(ngModel)]="decede.sexe"  class="type-select " nbSelect fullWidth
+                     placeholder="Sexe">
+            <nb-option *ngFor="let t of sexe" [value]="t">{{t}}</nb-option>
+          </nb-select>
+
+        </div>
+      </div>
+    </div>
+
+
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="form-group">
+          <label  class="label">Date de naissance</label>
+          <input [(ngModel)]="decede.dateNaissance" class="form-control" type="Date" nbInput fullWidth
+                 id="DateNai" placeholder="Date de naissance">
+
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+
+      <div class="col-sm-12">
+        <div class="form-group">
+          <label  class="label">Nationalité</label>
+          <input [(ngModel)]="decede.nationalite" class="form-control" type="string" nbInput fullWidth
+                 id="nationalite" placeholder="Nationalité">
+
+        </div>
+      </div>
+
+    </div>
+
+    <div class="row">
+
+      <div class="col-sm-12">
+        <div class="form-group">
+          <label  class="label">Adresse</label>
+          <input [(ngModel)]="decede.adresse" class="form-control" type="string" nbInput fullWidth
+                 id="adresse" placeholder="Adresse">
+
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+    </div>
+
+    <div class="row">
+
+      <div class="col-sm-12">
+        <div class="form-group">
+          <label  class="label">Lieu Décès</label>
+          <nb-select [(ngModel)]="decede.lieuxDeces"  class="type-select " nbSelect fullWidth
+                     placeholder="lieu Deces">
+            <nb-option *ngFor="let t of LieuD" [value]="t">{{ t}}</nb-option>
+          </nb-select>
+
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="form-group">
+          <label  class="label">Cause de mort</label>
+          <nb-select [(ngModel)]="decede.natureMort"  class="type-select " nbSelect fullWidth
+                     placeholder="Cause de mort">
+            <nb-option *ngFor="let t of NatureMort" [value]="t"> {{ t}}</nb-option>
+          </nb-select>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-12">
+        <button (click)="generatePdf('open')"
+                class="btn btn-outline-primary fa-pull-right">
+          <span>Open PDF</span></button>
+      </div>
+    </div>
+  </nb-card-body>
+</nb-card>
+
+
+
+

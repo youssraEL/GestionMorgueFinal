@@ -2,14 +2,14 @@
 <nb-card>
   <nb-card-header>
     <div class="row">
-      <div class="col-sm-6">Certificat du transfert du corps</div>
-      <div class="col-sm-6"><button (click)="save()" class="btn btn-outline-primary fa-pull-right" ><i class="fa fa-plus-circle"></i> Add</button></div></div>
+      <div class="col-sm-12">Certificat du transfert du corps</div>
+      </div>
   </nb-card-header>
   <nb-card-body>
     <div class="row">
       <div class="col-sm-6">
         <div class="form-group">
-          <label  class="label">Médcin</label>
+          <label  class="label">Médecin</label>
           <nb-select [(ngModel)]="MedcinID"  class="type-select " nbSelect fullWidth
                      placeholder="Médcin">
             <nb-option *ngFor="let t of NomMedcin" [value]="t.id">{{t.nom}} {{t.prenom}}</nb-option>
@@ -60,7 +60,7 @@
       </div>
       <div class="col-sm-6">
         <div class="form-group">
-          <label  class="label">Tel N°</label>
+          <label  class="label">N° téléphone </label>
           <input [(ngModel)]="trnsfrCorps.tel" class="form-control" type="string" nbInput fullWidth
                  id="tel" placeholder="Tel..">
 
@@ -104,7 +104,7 @@
 
       <div class="col-sm-6">
         <div class="form-group">
-          <label  class="label">De la sociéte ou l'administration chargé de l'inhumation ou du transfert</label>
+          <label  class="label">la sociéte ou l'administration chargé de l'inhumation ou du transfert</label>
           <input [(ngModel)]="trnsfrCorps.inhumationSociete" class="form-control" type="string" nbInput fullWidth
                  id="txt" placeholder="">
 
@@ -121,6 +121,15 @@
           </textarea>
 
         </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-12"><button (click)="generatePdf('open')"
+                                     class="btn btn-outline-primary fa-pull-right">
+        <span>Certificat PDF</span></button>
+        <div *ngIf="isAdmin"> <button (click)="save()" class="btn btn-outline-primary fa-pull-right" ><i class="fa fa-plus-circle"></i> Add</button>
+      </div>
       </div>
     </div>
   </nb-card-body>
