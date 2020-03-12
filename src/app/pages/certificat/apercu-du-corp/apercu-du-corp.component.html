@@ -48,10 +48,10 @@
     </div>
 
     <div class="row">
-      <div class="col-sm-12"><button (click)="generatePdfArabe('open')"
+      <div class="col-sm-12"><button (click)="generatePdf('open')"
                                      class="btn btn-outline-primary fa-pull-right">
         <span>Certificat PDF</span></button>
-        <div *ngIf="isAdmin"> <button (click)="save()" class="btn btn-outline-primary fa-pull-right" ><i class="fa fa-plus-circle"></i> Add</button>
+        <div *ngIf="isAdmin"> <button (click)="pdf()" class="btn btn-outline-primary fa-pull-right" ><i class="fa fa-plus-circle"></i> pdf()</button>
       </div>
       </div>
     </div>

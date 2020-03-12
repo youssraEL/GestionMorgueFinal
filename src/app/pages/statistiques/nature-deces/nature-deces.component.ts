@@ -25,7 +25,7 @@ export class NatureDecesComponent implements AfterViewInit, OnDestroy {
       });
       this.MNN = 0; this.MN = 0;
       for (let j = 0; j < this.List.length; j++) {
-       if (this.List[j] === 'mort naturel') {this.MN = this.MN + 1; }
+       if (this.List[j] === 'Mort naturel') {this.MN = this.MN + 1; }
         if (this.List[j] === 'Mort non naturel') {this.MNN = this.MNN + 1; }
       }
 

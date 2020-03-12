@@ -23,6 +23,16 @@ export class Decedes {
   obstacle: boolean;
   NumRegister: string;
   typeCertifica: string;
+  provinceD: string;
+ prefectureD: string ;
+  communeD: string;
+NomAR: string;
+PrenomAR: string;
+LieuNaiss: string;
+LieuDecesAR: string;
+nationaliteAR: string;
+FilsAR: string;
+  adresseAR: string;
   constructor() {
   }
 }

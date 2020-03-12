@@ -8,19 +8,19 @@ import {BulletinsService} from '../../../@core/backend/common/services/Bulletins
     <div echarts [options]="options" class="echart"></div>
   `,
   styleUrls: ['./region.component.scss'],
-  providers: [BulletinsService],
+  providers: [DecedesService],
 })
 export class RegionComponent implements AfterViewInit, OnDestroy {
   options: any = {};
   themeSubscription: any;
   List = [];
 
-  constructor(private theme: NbThemeService, private serviceB: BulletinsService) {
+  constructor(private theme: NbThemeService, private serviceD: DecedesService) {
   }
 TA: number; A: number; M: number; T: number; F: number; L: number; C: number; O: number;
   ngAfterViewInit() {
-    this.serviceB.getAll().subscribe( data1 => {
-      data1.forEach (  obj => { this.List.push(obj.province);
+    this.serviceD.getAll().subscribe( data1 => {
+      data1.forEach (  obj => { this.List.push(obj.provinceD);
       });
       this.TA = 0; this.A = 0; this.M = 0; this.T = 0; this.F = 0; this.L = 0; this.C = 0; this.O = 0;
       for (let j = 0; j < this.List.length; j++) {

@@ -13,7 +13,7 @@ export class PagesMenu {
   getMenu(): Observable<NbMenuItem[]> {
     const dashboardMenu = [
       {
-        title: 'IoT Dashboard',
+        title: 'Dashboard',
         icon: 'home-outline',
         link: '/pages/iot-dashboard',
         children: undefined,
@@ -27,6 +27,7 @@ export class PagesMenu {
       },
       {
         title: 'Bulletin de décès et de mortinalité',
+        // icon: 'documents-outline',
         children: [
           {
             title: 'Bulletins',
@@ -82,13 +83,14 @@ export class PagesMenu {
       },
       {
         title: 'statistiques',
+      //  icon: 'pie-chart-outline',
         children: [
-          {
+         {
             title: 'Décès des nouveaux nés',
             link: '/pages/statistiques/NouveauxNes',
           },
           {
-            title: 'Décès des enfants leurs ages de 1j à 30j',
+            title: 'Décès des enfants (1j à 30j)',
             link: '/pages/statistiques/DecesEnfants',
           },
           {

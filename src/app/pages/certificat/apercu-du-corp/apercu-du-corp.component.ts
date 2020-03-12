@@ -9,7 +9,8 @@ import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
 import * as jsPDF from 'jspdf';
 import {formatDate} from '@angular/common';
-pdfMake.vfs = pdfFonts.pdfMake.vfs;
+import { Base64 } from 'js-base64';
+// pdfMake.vfs = pdfFonts.pdfMake.vfs;
 @Component({
   selector: 'ngx-apercu-du-corp',
   templateUrl: './apercu-du-corp.component.html',
@@ -162,13 +163,12 @@ export class ApercuDuCorpComponent implements OnInit {
     }
 
   }
-
   private getDocumentDefinition() {
 
     // sessionStorage.setItem('resume', JSON.stringify());
     return {
       content: [
-        {
+        /*{
           alignment: 'center',
           width: 50,
           height: 50,
@@ -231,6 +231,14 @@ export class ApercuDuCorpComponent implements OnInit {
           alignment: 'right',
           fontSize: 12,
           margin: [20, 40, 20, 5],
+        },*/
+
+        {
+          text: 'Test',
+        },
+        {
+          text : 'ಕನ್ನಡ ',
+          font: 'mfont',
         },
       ],
       styles: {
@@ -245,101 +253,7 @@ export class ApercuDuCorpComponent implements OnInit {
       },
     };
   }
-
-  generatePdfArabe(action = 'open') {
-    const documentArabe = this.getDocumentArabe();
-    switch (action) {
-      case 'open':
-        pdfMake.createPdf(documentArabe).open();
-        break;
-      // case 'print': pdfMake.createPdf(documentDefinition).print(); break;
-      // case 'download': pdfMake.createPdf(documentDefinition).download(); break;
-      default:
-        pdfMake.createPdf(documentArabe).open();
-        break;
-    }
-  }
-
-  private getDocumentArabe() {
-    const doc = new jsPDF();
-    doc.addFont('NafeesNastaleeq.ttf', 'arabic', 'Identity-H');
-    doc.setFont('arabic');
-    doc.text(50, 50, 'السلام عليكم'  );
-    doc.save('demo.pdf');
-    // return {
-    //   content: [
-    //     {
-    //       text: '\ك\ة المغربية\n وزارة الداخلية \n ولاية جهة طنجة تطوان ' +
-    //         '\nقسم حفظ الصحة و السلامة العمومية\n مصلحة الطب الشرعي',
-    //       style: 'header',
-    //     },
-    //     {
-    //       text: 'CERTIFICAT APERCU DU CORPS',
-    //       fontSize: 20,
-    //       alignment: 'center',
-    //       margin: [0, 10, 0, 40],
-    //       bold: true,
-    //     },
-    //     {
-    //       columns: [
-    //         {
-    //           text: 'Défunt  : ', style: 'style',
-    //         },
-    //         {
-    //           text: this.ApercuCorps.defunt, style: 'style',
-    //         },
-    //       ],
-    //     },
-    //     {
-    //       columns: [
-    //         {
-    //           text: 'Médcin/ Assistant de santé  : ', style: 'style',
-    //         },
-    //         {
-    //           text: this.MedecinID, style: 'style',
-    //         },
-    //       ],
-    //     },
-    //     {
-    //       columns: [
-    //         {
-    //           text: 'Centre médico-légal : ', style: 'style',
-    //         },
-    //         {
-    //           text: this.ApercuCorps.CenterMedicoLegal, style: 'style',
-    //         },
-    //       ],
-    //     },
-    //     {
-    //       columns: [
-    //         {
-    //           text: 'Date déclaration : ', style: 'style',
-    //         },
-    //         {
-    //           text: this.ApercuCorps.dateDeclaration, style: 'style',
-    //         },
-    //       ],
-    //     },
-    //     {
-    //       text: 'Fait à Tanger le :',
-    //       alignment: 'right',
-    //       fontSize: 12,
-    //       margin: [20, 10, 70, 5],
-    //     },
-    //   ],
-    //   styles: {
-    //     style: {
-    //       fontSize: 14,
-    //       margin: [0, 10, 0, 10],
-    //     },
-    //     header: {
-    //       fontSize: 12,
-    //       alignment: 'center',
-    //     },
-    //   },
-    // };
-
-  }
 }
+
 
 

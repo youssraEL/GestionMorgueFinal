@@ -64,6 +64,10 @@ export class DecedesComponent implements OnInit {
         title: 'Date de naissance',
         type: 'Date',
       },
+      LieuNaiss: {
+        title: 'Lieu de naissance',
+        type: 'string',
+      },
       fils: {
         title: 'Fille ou fils de ',
         type: 'String',
@@ -122,6 +126,30 @@ export class DecedesComponent implements OnInit {
         title: 'Obstacle medicolégal',
         type: 'boolean',
       },
+      NomAR: {
+        title: 'النسب',
+        type: 'string',
+      },
+      PrenomAR: {
+        title: 'الإسم',
+        type: 'string',
+      },
+      LieuDecesAR: {
+        title: 'مكان الوفاة',
+        type: 'string',
+      },
+      nationaliteAR: {
+        title: 'الجنسية',
+        type: 'string',
+      },
+      FilsAR: {
+        title: 'إبن أو بنت',
+        type: 'string',
+      },
+      adresseAR: {
+        title: 'العنوان',
+        type: 'string',
+      },
     },
   };
   sexe = ['Femme', 'Homme', 'indéterminé'];
@@ -170,9 +198,11 @@ export class DecedesComponent implements OnInit {
     });
   }
   // source: LocalDataSource = new LocalDataSource();
+  province = ['Tanger-Assilah', 'M\'diq-Fnideq', 'Tétouan', 'Fahs-Anjra', 'Larache', 'Al Hoceïma', 'Chefchaouen', 'Ouezzane'];
   decede: Decedes = new Decedes();
   initialeID: number;
   immediateID: number;
+  LieuNaiss: string;
 
   ngOnInit() {
     this.userservice.getCurrentUser().subscribe(data => {
@@ -272,17 +302,20 @@ export class DecedesComponent implements OnInit {
       content: [
         {
           table: {
-            widths: ['70%', '30%'],
+            widths: ['65%', '35%'],
             body: [
               [
                 {
                   text: 'ROYAUME DU MAROC',
                   fontSize: 10,
-                  colSpan: 2,
                   alignment: 'left',
-                  border: [true, true, true, false],
+                  border: [true, true, false, false],
                 },
-                '',
+                {
+                  text: 'Préfecture /Province: \n Préfecture d\'arrondissements: \n Commune/ Arrondissement: ',
+                  fontSize: 9,
+                  border: [false, true, true, false],
+                },
               ],
               [
                 {
@@ -325,7 +358,7 @@ export class DecedesComponent implements OnInit {
                 {
                   border: [true, false, true, true],
                   fontSize: 10,
-                  text: '\n Signuature et cachet \n\n\n\n\n\n\n Constation faire : \n A: \n\n le:'},
+                  text: '\n Signuature et cachet \n\n\n\n\n\n Constation faire : \n A: \n le:'},
               ],
             ],
           },
@@ -395,9 +428,9 @@ export class DecedesComponent implements OnInit {
                   fontSize: 10,
                  // margin: [0, 10, 0, 10],
                   ul: [
-                    'Préfecture /Province: ' + ' cfvgbhnj,k',
-                    'Préfecture d\'arrondissements: ',
-                    'Commune/ Arrondissement: ',
+                    'Préfecture /Province: ' + this.decede.provinceD,
+                    'Préfecture d\'arrondissements: ' + this.decede.prefectureD,
+                    'Commune/ Arrondissement: ' + this.decede.communeD,
                   ],
                 },
               ],
@@ -531,7 +564,7 @@ export class DecedesComponent implements OnInit {
               [
                 {
                   border: [true, false, true, true],
-                  text: ' Autre états morbides ayant significativement constribué au décès. \n\n',
+                  text: ' Autre états morbides ayant significativement constribué au décès.\n\n',
                   fontSize: 11,
                   colSpan: 3,
                 },
@@ -581,13 +614,43 @@ export class DecedesComponent implements OnInit {
               ],
               [
                 {
-                  text: 'En cas de cause externe :\n Date de survenue ' + this.DateServ +
-                  '\n Lieu de survenue : ' + this.lieuList + '\n Circonstances de survenue ' + this.CirconServ,
-                  rowSpan: 2,
+                  text: 'En cas de cause externe :',
+                  fontSize: 12,
+                  decoration: 'underline',
+                  bold: true,
+                  border: [true, true, true, false],
                 },
                 {
-                  text: 'Autopsie :\n Une autopsie a-t-elle été demandé ? ' + this.autopsie +
+                  text: 'Autopsie :',
+                  decoration: 'underline',
+                  bold: true,
+                  fontSize: 12,
+                  border: [true, true, true, false],
+                },
+              ],
+              [
+                {
+                  border: [true, false, true, true],
+                  text: 'Date de survenue ' + this.DateServ +
+                  '\n Lieu de survenue : ' + this.lieuList + '\n Circonstances de survenue ' + this.CirconServ,
+                  rowSpan: 3,
+                  fontSize: 12,
+                },
+                {
+                  border: [true, false, true, true],
+                  text: 'Une autopsie a-t-elle été demandé ? ' + this.autopsie +
                     '\n Si oui les résultats ont-ils été utilisés dans certification ? ' + this.resultatsAutopsie,
+                  fontSize: 12,
+                },
+              ],
+              [
+                '',
+                {
+                  text: 'Intervention chirurgicale récente: ',
+                  fontSize: 12,
+                  decoration: 'underline',
+                  bold: true,
+                  border: [false, true, true, false],
                 },
               ],
               [
@@ -596,16 +659,37 @@ export class DecedesComponent implements OnInit {
                   text: 'Intervention chirurgicale récente: \n Une operation a-t-elle ' +
                     'été effectuées lors des 4 dernières semaines ? ' + this.operation +
                     '\n Si oui, Date de l\'opération: ' + this.Dateop + ' \n motif de l\'operation:  ' + this.motifDop,
+                  fontSize: 12,
+                  border: [false, false, true, false],
                 },
               ],
               [
-                { text: 'Décès d\'une femme de 12-54 ans: \n ' +
-                    'Le décès est-il survenu pendant une grosesse ou moins d\'un an après sa terminaison ?' + this.decesGrossesse +
-                    '\nSi oui, le décès de la femme est-il survenu : ' + this.decesFemme +
-                    '\nLa grossesse a-t-elle contribué au decès ? ' + this.ContribueGros},
                 {
-                 text: 'Décès périnatal \n' +
-                   '-Grossesse multiple: ' + this.Grossesse + '\n' +
+                  text: 'Décès d\'une femme de 12-54 ans:',
+                  fontSize: 12,
+                  decoration: 'underline',
+                  bold: true,
+                  border: [true, true, true, false],
+                },
+                {
+                  text: 'Décès périnatal :',
+                  decoration: 'underline',
+                  bold: true,
+                  fontSize: 12,
+                  border: [true, true, true, false],
+                },
+              ],
+              [
+                { text: 'Le décès est-il survenu pendant une grosesse ou moins d\'un an après sa terminaison ?' + this.decesGrossesse +
+                    '\nSi oui, le décès de la femme est-il survenu : ' + this.decesFemme +
+                    '\nLa grossesse a-t-elle contribué au decès ? ' + this.ContribueGros,
+                  fontSize: 12,
+                  border: [true, false, true, true],
+                },
+                {
+                  fontSize: 12,
+                  border: [true, false, true, true],
+                 text: '-Grossesse multiple: ' + this.Grossesse + '\n' +
                    '-Age gestationnel' + this.Grossesse + '\n' +
                    '-Poids à la naissance (en grammes) ' + this.Poids + '\n' +
                    '-Age de la mère en années ' + this.AgeMere + '\n' +
@@ -616,6 +700,8 @@ export class DecedesComponent implements OnInit {
                   border: [true, true, false, true],
                   text: 'Circonstatation faite par :',
                   fontSize: 12,
+                  decoration: 'underline',
+                  bold: true,
                 },
                 {
                   border: [false, true, true, true],

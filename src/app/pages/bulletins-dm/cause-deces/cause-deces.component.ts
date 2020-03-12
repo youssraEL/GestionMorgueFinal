@@ -39,6 +39,10 @@ export class CauseDecesComponent implements OnInit {
         title: 'Description',
         type: 'string',
       },
+      descriptionAR: {
+        title: 'الوصف',
+        type: 'string',
+      },
     },
   };
   Cause: Cause = new Cause();

@@ -10,7 +10,7 @@ pdfMake.vfs = pdfFonts.pdfMake.vfs;
     <div echarts [options]="options" class="echart"></div>
   `,
   styleUrls: ['./deces-enfants.component.scss'],
-  // providers: [DecedesService],
+ providers: [DecedesService],
 })
 export class DecesEnfantsComponent implements AfterViewInit, OnDestroy {
   List = [];
@@ -21,14 +21,15 @@ export class DecesEnfantsComponent implements AfterViewInit, OnDestroy {
   i: number;
   options: any = {};
   themeSubscription: any;
-  constructor(private theme: NbThemeService) {
+  constructor(private theme: NbThemeService, private serviceDecede: DecedesService) {
   }
 getAgeParJour(DateNaiss , DateDeces ) {
     DateNaiss = new Date(DateNaiss);
     DateDeces = new Date(DateDeces);
     return ((DateDeces.getTime() - DateNaiss.getTime()) / 86400000).toFixed(0);
   }
-  /*ngAfterViewInit() {
+
+  ngAfterViewInit(): void {
     this.serviceDecede.getAll().subscribe( data1 => {
       data1.forEach (  obj => { this.List.push(obj.sexe), this.List1.push(obj.dateNaissance), this.List2.push(obj.dateDeces);
       });
@@ -96,8 +97,7 @@ getAgeParJour(DateNaiss , DateDeces ) {
         };
       });
     });
-  }*/
-
+  }
   ngOnDestroy()
     :
     void {

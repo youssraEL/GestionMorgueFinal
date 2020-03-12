@@ -3,12 +3,12 @@
   <nb-card-header>
     <div class="row">
       <div class="col-sm-6">Les Causes de décès</div>
-      <div *ngIf="isAdmin"> <div class="col-sm-6"><button (click)="save()" class="btn btn-outline-primary fa-pull-right" ><i class="fa fa-plus-circle"></i> Add</button></div></div>
+      <div class="col-sm-6"><div *ngIf="isAdmin"> <button (click)="save()" class="btn btn-outline-primary fa-pull-right" ><i class="fa fa-plus-circle"></i> Add</button></div></div>
     </div>
   </nb-card-header>
   <nb-card-body>
     <div class="row">
-      <div class="col-sm-6">
+      <div class="col-sm-4">
         <div class="form-group">
           <label  class="label">Code</label>
           <input [(ngModel)]="Cause.code" class="form-control" type="string" nbInput fullWidth
@@ -16,11 +16,22 @@
 
         </div>
       </div>
-      <div class="col-sm-6">
+      <div class="col-sm-4">
         <div class="form-group">
           <label  class="label">Description</label>
           <textarea  [(ngModel)]="Cause.description" class="form-control"  type="string"  fullWidth
                   placeholder="Description" >
+          </textarea>
+
+        </div>
+      </div>
+
+
+      <div class="col-sm-4">
+        <div class="form-group">
+          <label  class="label">الوصف</label>
+          <textarea  [(ngModel)]="Cause.descriptionAR" class="form-control"  type="string"  fullWidth
+                     placeholder="الوصف" >
           </textarea>
 
         </div>

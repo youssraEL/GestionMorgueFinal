@@ -2,8 +2,6 @@
   <nb-card-header>
     <div class="row">
       <div class="col-sm-6">Bulletin</div>
-      <div class="col-sm-6">  <div *ngIf="isAdmin"><button (click)="save()" class="btn btn-outline-primary fa-pull-right" ><i class="fa fa-plus-circle"></i> Add</button></div>
-      </div>
       </div>
   </nb-card-header>
   <nb-card-body>
@@ -31,8 +29,10 @@
       <div class="col-sm-6">
         <div class="form-group">
           <label  class="label">Province ou préfecture</label><br>
-          <input [(ngModel)]="Bulletins.province" class="form-control" ng-required="expression" type="string" nbInput fullWidth
-                 id="province" placeholder="Province ou préfecture">
+          <nb-select  [(ngModel)]="Bulletins.province" class="type-select "  nbSelect fullWidth
+                      placeholder="Province ou préfecture" >
+            <nb-option *ngFor="let t of province" [value]="t" >{{ t }}</nb-option>
+          </nb-select>
         </div>
       </div>
       <div class="col-sm-6">
@@ -45,8 +45,6 @@
 
 
         </div>
-      </div>
-      <div class="col-sm-6"><button (click)="add()" class="btn btn-outline-primary fa-pull-right" ><i class="fa fa-plus-circle"></i> Add</button>
       </div>
     </div>
 
@@ -116,38 +114,48 @@
       </div>
     </div>
     <div class="row">
-      <div class="col-sm-12">
+      <div class="col-sm-6">
         <div class="form-group">
-          <label  class="label">Remarque</label><br>
-          <textarea [(ngModel)]="Bulletins.remarque" class="form-control" type="string" nbInput fullWidth
-                 id="remarque" placeholder="Remarque">
-          </textarea>
-        </div>
+          <label  class="label">Compostage</label>
+          <input [(ngModel)]="compostage" class="form-control"  type="string" nbInput fullWidth
+                 id="Compostage" placeholder="Compostage">
 
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="form-group">
+          <label  class="label">Constatation faite par</label>
+          <input [(ngModel)]="constation" class="form-control"  type="string" nbInput fullWidth
+                 id="constation" placeholder="Constatation faite par">
+
+        </div>
       </div>
     </div>
+    <div class="row">
+      <div class="col-sm-9">
+        <div class="form-group">
+          <label  class="label">Num register</label><br>
+          <input [(ngModel)]="Bulletins.remarque" class="form-control"  type="string" nbInput fullWidth
+                 id="num_register" placeholder="Num register">
+        </div>
+      </div>
+          <div class="col-sm-3">
+            <div class="form-group">
+              <label  class="label"></label><br>
+          <button (click)="add()" class="btn btn-outline-primary fa-pull-left">Valider</button>
+        </div>
+      </div>
+
+      </div>
 
     <div class="row">
       <div class="col-md-12">
-        <!--    <div class="shadow-sm card action-buttons ">-->
+          <div *ngIf="isAdmin"><button (click)="save()" class="btn btn-outline-primary fa-pull-right" ><i class="fa fa-plus-circle"></i> Add</button></div>
         <button (click)="generatePdf('open')"
                 class="btn btn-outline-primary fa-pull-right" >
-          <!--          <i class="material-icons">-->
-          <!--            picture_as_pdf-->
-          <!--          </i> -->
+
           <span>Open PDF</span></button>
-        <button (click)="generatePdf('download')"
-                class="btn btn-outline-primary fa-pull-right">
-          <!--          <i class="material-icons">-->
-          <!--            cloud_download-->
-          <!--          </i>-->
-          <span>Download PDF</span></button>
-        <button (click)="generatePdf('print')"
-                class="btn btn-outline-primary fa-pull-right">
-          <!--          <i class="material-icons">-->
-          <!--            print-->
-          <!--          </i-->
-          <span>Print PDF</span></button>
+
       </div>
     </div>
     <!--    </div>-->

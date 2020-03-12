@@ -12,6 +12,7 @@ import {Decedes} from '../../../@core/backend/common/model/Decedes';
 import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
 import {DecedesList} from '../../../@core/backend/common/model/DecedesList';
+import {formatDate} from '@angular/common';
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 @Component({
@@ -22,10 +23,13 @@ pdfMake.vfs = pdfFonts.pdfMake.vfs;
 })
 
 export class BulletinsComponent implements OnInit {
+  compostage: string;
+  constation: string;
   Bulletins: Bulletins = new Bulletins();
   typeBulletin = ['Bulletin de décès', 'Bulletin de mortinalité'];
   Milieu = ['Urbain', 'Rural', 'Inconnu'];
   Lieu = ['Tanger', 'Asila', 'Tetouan'];
+  province = ['Tanger-Assilah', 'M\'diq-Fnideq', 'Tétouan', 'Fahs-Anjra', 'Larache', 'Al Hoceïma', 'Chefchaouen', 'Ouezzane'];
   num = [1, 2, 3, 4, 5, 6, 7, 8];
   diagnostique = ['Mort naturelle', 'Mort non naturelle'];
   cimetiere = ['Cimetière Almojahidine', 'Cimetière Sidi Omar'];
@@ -266,7 +270,7 @@ export class BulletinsComponent implements OnInit {
   }
   ngOnInit() {
     this.userservice.getCurrentUser().subscribe(data => {
-      // console.log(data);
+      console.log(data);
       console.log(data.role);
       this.isAdmin = data.role.includes('ADMIN');
     });
@@ -402,6 +406,11 @@ export class BulletinsComponent implements OnInit {
     }
 
   }
+  getAgeParAnnee(DateNaiss , DateDeces ) {
+    DateNaiss = new Date(DateNaiss);
+    DateDeces = new Date(DateDeces);
+    return ((DateDeces.getTime() - DateNaiss.getTime()) / 31536000000).toFixed(0);
+  }
 
   private getDocumentDefinition() {
 
@@ -421,7 +430,7 @@ export class BulletinsComponent implements OnInit {
                 },
                 {
                   text: 'Province/ préfecture ' + this.Bulletins.province + '\n Cercle ' + this.Bulletins.cercle +
-                    '\n Municipalité /centre/commune' + this.Bulletins.centre,
+                    '\n Municipalité /centre/commune ' + this.Bulletins.centre,
                   fontSize: 10,
                   border: [false, true, true, false],
                 },
@@ -443,9 +452,9 @@ export class BulletinsComponent implements OnInit {
                   colSpan: 2,
                   border: [true, false, true, false],
                   fontSize: 12,
-                  text: 'Décès survenu le:  ' + this.dd + ' à  '  + this.h + ' heure à  ' + this.l + '  \n' + 'Nom et prénom de décédé:  ' + this.n + ' ' + this.p +
+                  text: 'Décès survenu le:  ' + this.jstoday + ' à  '  + this.h + ' heure à  ' + this.l + '  \n' + 'Nom et prénom de décédé:  ' + this.n + ' ' + this.p +
                     '\n' + 'Sexe:   ' + this.s + '  Nationalite: ' + this.na
-                  + '\n Domicile  ' + this.a + '\n age:   \n ',
+                  + '\n Domicile  ' + this.a + '\n age:  ' + this.getAgeParAnnee(this.dn, this.dd) + '  \n ',
                 },
                 '',
               ],
@@ -462,7 +471,7 @@ export class BulletinsComponent implements OnInit {
               ],
               [
                 {
-                  text: 'N° de l\'acte au registre des décès ' + this.numR +
+                  text: 'N° de l\'acte au registre des décès ' + this.Bulletins.remarque +
                     '\n de l\'hopital/ DMH/Commune ',
                   colSpan: 2,
                   fontSize: 12,
@@ -493,24 +502,25 @@ export class BulletinsComponent implements OnInit {
               [
                 {
                   colSpan: 2,
-                  text: 'I- IDENTIFICATION \n\n' +
-                    'N° de l\'acte au registre  ' + this.numR + '  N° de compostage: ',
+                  text: 'I- IDENTIFICATION',
+                  decoration: 'underline',
+                  bold: true,
                   border: [true, false, true, false],
                 },
                 '',
               ],
               [
                 {
-                  text: 'Lieu de déclaration:',
+                  text: 'N° de l\'acte au registre  ' + this.Bulletins.remarque + '  N° de compostage: \n\n Lieu de déclaration:',
                   border: [true, false, false, false],
                 },
                 {border: [false, false, true, false],
                   fontSize: 12,
                   // margin: [0, 10, 0, 10],
                   ul: [
-                    'Province ou Prefecture: ',
-                    'Cercle: ',
-                    'Municipalité /Centre/ Commune: ',
+                    'Province ou Prefecture: ' + this.Bulletins.province,
+                    'Cercle: ' + this.Bulletins.cercle,
+                    'Municipalité /Centre/ Commune: ' + this.Bulletins.centre,
                   ],
                 },
               ],
@@ -523,16 +533,16 @@ export class BulletinsComponent implements OnInit {
                   fontSize: 12,
                   // margin: [0, 10, 0, 10],
                   ul: [
-                    'Province ou Prefecture: ',
-                    'Cercle: ',
-                    'Municipalité /Centre/ Commune: ',
+                    'Province ou Prefecture: ' + this.prov,
+                    'Cercle: ' + this.Pre,
+                    'Municipalité /Centre/ Commune: ' + this.CD,
                   ],
                 },
               ],
               [
                 {
                   colSpan: 2,
-                  text: 'Milieu de résidnce:',
+                  text: 'Milieu de résidnce:' + this.Bulletins.residece,
                   border: [true, false, true, true],
                 },
                 '',
@@ -540,8 +550,9 @@ export class BulletinsComponent implements OnInit {
               [
                   {
                     colSpan: 2,
-                    text: 'II- CARACTERISTIQUES \n\n' +
-                      'Type de bulletin : ' + this.Bulletins.typeBulletin + '\n Date de décès  ' + this.dd ,
+                    text: 'II- CARACTERISTIQUES \n\n',
+                    decoration: 'underline',
+                    bold: true,
                     border: [true, false, true, false],
                   },
                   '',
@@ -550,7 +561,8 @@ export class BulletinsComponent implements OnInit {
                 {
                   colSpan: 2,
                   border: [true, false, true, false],
-                  text: 'Lieu où de décès esst servenu :' + this.l ,
+                  text: 'Type de bulletin : ' + this.Bulletins.typeBulletin + '\n Date de décès  ' + this.jstoday + '\n'
+                  + 'Lieu où de décès est servenu :' + this.l ,
                 },
                 '',
               ],
@@ -566,7 +578,7 @@ export class BulletinsComponent implements OnInit {
                 {
                   colSpan: 2,
                   border: [true, false, true, false],
-                  text: 'Age :',
+                  text: 'Age :' + this.getAgeParAnnee(this.dn, this.dd),
                 },
                 '',
               ],
@@ -607,8 +619,10 @@ export class BulletinsComponent implements OnInit {
               [
                 {
                   colSpan: 2,
-                 text: 'III RENSEIGNEMENTS SUR LA CAUSE DU DECES OU DE MORTINATALITE',
+                 text: 'III- RENSEIGNEMENTS SUR LA CAUSE DU DECES OU DE MORTINATALITE',
                   border: [true, true, true, false],
+                  decoration: 'underline',
+                  bold: true,
                 },
                 '',
               ],
@@ -620,8 +634,8 @@ export class BulletinsComponent implements OnInit {
                 {
                   border: [false, false, true, false],
                  ul: [
-                   'Cause immédiate',
-                   'Cause initiale',
+                   'Cause immédiate' + this.cim,
+                   'Cause initiale', + this.cini,
                  ],
                 },
               ],
@@ -633,9 +647,9 @@ export class BulletinsComponent implements OnInit {
                 {
                   border: [false, false, true, false],
                   ul: [
-                    '\nNature de traumatisme',
+                    'Nature de traumatisme',
                     'Nature d\'intoxication',
-                    'Autre\n',
+                    'Autre',
                   ],
                 },
               ],
@@ -643,7 +657,7 @@ export class BulletinsComponent implements OnInit {
                 {
                   border: [true, false, true, true],
                   colSpan: 2,
-                  text: 'Constatation faite par',
+                  text: 'Constatation faite par ' + this.constation,
                 },
                 '',
               ],
@@ -671,13 +685,20 @@ n: string;
   l: string;
   e: string;
   pr: string;
+  cim: string;
+  cini: string;
+  CD: string;
+  Pre: string;
+  prov: string;
+  jstoday = '';
   add() {
-    this.serviceD.getByNumRegister(this.Bulletins.cercle).subscribe(obj => {
+    this.serviceD.getByNumRegister(this.Bulletins.remarque).subscribe(obj => {
       this.DecedeHumain.push(new DecedesList(obj));
       this.l = obj.lieuxDeces;
       this.n = obj.nom;
       this.p = obj.prenom;
       this.dd = obj.dateDeces;
+      this.jstoday = formatDate(this.dd, 'dd-MM-yyyy', 'en-US', '+0530');
       this.h = obj.heure;
       this.s = obj.sexe;
       this.na = obj.nationalite;
@@ -685,7 +706,12 @@ n: string;
       this.dn = obj.dateNaissance;
       this.numR = obj.NumRegister;
       this.e = obj.Etat;
-      this.pr = obj.pr;
+      this.pr = obj.profession;
+      this.cim = obj.causeImmdiate;
+      this.cini = obj.causeInitial;
+      this.CD = obj.communeD;
+      this.Pre = obj.prefectureD;
+      this.prov = obj.provinceD;
     });
   }
 }

@@ -20,19 +20,22 @@ export class NouveauxNesComponent implements AfterViewInit, OnDestroy {
   constructor(private serviceDecede: DecedesService, private theme: NbThemeService) {
   }
   ngAfterViewInit() {
-    /*this.serviceDecede.getAll().subscribe( data1 => {
-      data1.forEach (  obj => { this.List.push(obj.mortNe);
-        this.List1.push(obj.dateNaissance);
+   this.serviceDecede.getAll().subscribe( data1 => {
+      data1.forEach (  obj => { this.List.push(obj.mortNe, obj.dateNaissance);
       });
       this.m2 = 0;
 
-      for (let j = 0; j < this.List.length; j++) {
+      for (let j = 0; j < this.List.length; j = j + 1) {
         if (this.List[j] === 1) {
-          /!*if (this.List1[j].includes('2020-02')) {
+          console.log('tt' + this.List);
+         if (this.List1[ j + 1 ].includes('2020-02-24 00:00:00')) {
             this.m2 = this.m2 + 1;
-          }*!/
+           console.log(this.m2);
+          }
+          console.log(this.m2);
         }
-      }*/
+      }
+      console.log(this.m2);
       this.themeSubscription = this.theme.getJsTheme().subscribe(config => {
 
         const colors: any = config.variables;
@@ -124,12 +127,12 @@ export class NouveauxNesComponent implements AfterViewInit, OnDestroy {
               name: '2020',
               type: 'line',
               smooth: true,
-              data: [3.9, 45, 11.1, 18.7, 48.3, 69.2, 231.6, 46.6, 55.4, 18.4, 10.3, 0.7],
+              data: [this.m1, this.m2, 11.1, 18.7, 48.3, 69.2, 231.6, 46.6, 55.4, 18.4, 10.3, 0.7],
             },
           ],
         };
       });
-  //  });
+  });
   }
   ngOnDestroy(): void {
     this.themeSubscription.unsubscribe();

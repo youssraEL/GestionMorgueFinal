@@ -23,7 +23,7 @@ export class SelonCauseComponent implements AfterViewInit, OnDestroy {
     this.serviceD.getAll().subscribe( data1 => {
       data1.forEach (  obj => { this.List.push(obj.causeMort);
       });
-      this.TA = 0; this.A = 0; this.M = 0; this.T = 0; this.F = 0; this.L = 0; this.C = 0; this.ML = 0; this.ML = 0;
+      this.TA = 0; this.A = 0; this.M = 0; this.T = 0; this.F = 0; this.L = 0; this.C = 0; this.ML = 0; this.ML = 0; this.O = 0;
       for (let j = 0; j < this.List.length; j++) {
         switch (this.List[j]) {
           case 'accident':

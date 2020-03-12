@@ -29,7 +29,7 @@ export interface Address {
 
 export abstract class UserData {
   abstract get gridDataSource(): DataSource;
-  abstract getCurrentUser(): Observable<User>;
+  abstract getCurrentUser(): Observable<any>;
   abstract list(pageNumber: number, pageSize: number): Observable<User[]>;
   abstract get(id: number): Observable<User>;
   abstract update(user: User): Observable<User>;

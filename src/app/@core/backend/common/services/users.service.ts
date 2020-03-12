@@ -27,7 +27,7 @@ export class UsersService extends UserData {
     return this.api.list(pageNumber, pageSize);
   }
 
-  getCurrentUser(): Observable<User> {
+  getCurrentUser(): Observable<any> {
     return this.authService.isAuthenticated()
       .pipe(
         switchMap(authenticated => {

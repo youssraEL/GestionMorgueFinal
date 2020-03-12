@@ -3,7 +3,7 @@
   <nb-card-header>
     <div class="row">
       <div class="col-sm-6">Ajouter un Medecin</div>
-      <div *ngIf="isAdmin"> <div class="col-sm-6"><button (click)="save()" class="btn btn-outline-primary fa-pull-right" ><i class="fa fa-plus-circle"></i> Add</button></div></div>
+      <div class="col-sm-6"><div *ngIf="isAdmin"> <button (click)="save()" class="btn btn-outline-primary fa-pull-right" ><i class="fa fa-plus-circle"></i> Add</button></div></div>
     </div>
   </nb-card-header>
   <nb-card-body>
@@ -18,9 +18,27 @@
       </div>
       <div class="col-sm-6">
         <div class="form-group">
-          <label  class="label">Prenom Medecin</label>
+          <label  class="label">الإسم العائلي</label>
+          <input [(ngModel)]="medcin.nomAR" class="form-control" type="string" nbInput fullWidth
+                 id="nomAR" placeholder="الإسم العائلي">
+
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-6">
+        <div class="form-group">
+          <label  class="label">Prénom Medecin</label>
           <input [(ngModel)]="medcin.prenom" class="form-control" type="string" nbInput fullWidth
-                 id="prenom" placeholder="Prenom Medecin">
+                 id="prenom" placeholder="Nom Medecin">
+
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="form-group">
+          <label  class="label">الإسم الشخصي</label>
+          <input [(ngModel)]="medcin.prenomAR" class="form-control" type="string" nbInput fullWidth
+                 id="prenomAR" placeholder="الإسم الشخصي">
 
         </div>
       </div>
@@ -34,6 +52,16 @@
 
         </div>
       </div>
+      <div class="col-sm-6">
+        <div class="form-group">
+          <label  class="label">العنوان</label>
+          <input [(ngModel)]="medcin.AdressAR" class="form-control" type="string" nbInput fullWidth
+                 id="AdresseAR" placeholder="العنوان">
+
+        </div>
+      </div>
+    </div>
+    <div class="row">
       <div class="col-sm-6">
         <div class="form-group">
           <label  class="label">CIN d'encadrant</label>

@@ -44,6 +44,18 @@ export class MedcinsComponent implements OnInit {
         title: 'Adresse',
         type: 'string',
       },
+      nomAR: {
+        title: 'النسب',
+        type: 'string',
+      },
+      prenomAR: {
+        title: 'الإسم',
+        type: 'string',
+      },
+      AdressAR: {
+        title: 'العنوان',
+        type: 'string',
+      },
       CIN: {
         title: 'CIN d\'encadrant',
         type: 'string',

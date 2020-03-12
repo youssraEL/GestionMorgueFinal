@@ -61,7 +61,7 @@ export class DecedesService {
       );
   }
 
-  public getByNumRegister(NumRegister: string) {
+  public getByNumRegister(NumRegister: number) {
     return this.http.get(this.baseurl + '/getByNumRegister/' + NumRegister, this.httpOptions )
       .pipe(
         retry(1),
