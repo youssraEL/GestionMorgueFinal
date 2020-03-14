@@ -8,7 +8,7 @@
   <nb-card-body class="host">
 
     <nb-tabset>
-      <nb-tab tabTitle="ajouter un decede">
+      <nb-tab tabTitle="les informations sur un décédé">
         <nb-card>
           <nb-card-body>
             <div class="row">
@@ -471,15 +471,13 @@
                 <button (click)="generatePdf('open')"
                         class="btn btn-outline-primary fa-pull-right">
                   <span>PDF</span></button>
-                <div *ngIf="isAdmin"><button (click)="save()" class="btn btn-outline-primary fa-pull-right" ><i class="fa fa-plus-circle"></i> Add</button></div>
-              </div>
             </div>
-            <!--    </div>-->
+            </div>
           </nb-card-body>
         </nb-card>
 
       </nb-tab>
-      <nb-tab tabTitle="ajouter un deces">
+      <nb-tab tabTitle="معلومات عن المتوفى">
         <nb-card>
           <nb-card-body>
             <nb-card-body>

@@ -14,7 +14,7 @@ export class Decedes {
   mortNe: boolean;
   profession: string;
   dateDeces: Date;
-  natureMort: Date;
+  natureMort: string;
   causeMort: string;
   causeInitial: Cause;
   causeImmdiate: Cause;

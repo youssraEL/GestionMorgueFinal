@@ -33,7 +33,7 @@
           <label  class="label">Médcin/ Assistant de santé</label>
           <nb-select [(ngModel)]="MedecinID"  class="type-select " nbSelect fullWidth
                      placeholder="Medcin/ Assistant de santé">
-            <nb-option *ngFor="let t of NomMedcin" [value]="t.id">{{t.nom}} {{t.prenom}}</nb-option>
+            <nb-option *ngFor="let t of NomMedcin" [value]="t.nomAR + t.prenomAR">{{t.nomAR}} {{t.prenomAR}}</nb-option>
           </nb-select>
         </div>
       </div>
@@ -45,13 +45,20 @@
 
         </div>
       </div>
+
+      <div *ngIf="ApercuCorps.CenterMedicoLegal">
+        {{actualise()}}
+      </div>
     </div>
 
     <div class="row">
       <div class="col-sm-12"><button (click)="generatePdf('open')"
                                      class="btn btn-outline-primary fa-pull-right">
         <span>Certificat PDF</span></button>
-        <div *ngIf="isAdmin"> <button (click)="pdf()" class="btn btn-outline-primary fa-pull-right" ><i class="fa fa-plus-circle"></i> pdf()</button>
+        <button (click)="pdf()"
+                                       class="btn btn-outline-primary fa-pull-right">
+          <span>Certificat PDF Arabic</span></button>
+        <div *ngIf="isAdmin"> <button (click)="save()" class="btn btn-outline-primary fa-pull-right" ><i class="fa fa-plus-circle"></i> Add</button>
       </div>
       </div>
     </div>

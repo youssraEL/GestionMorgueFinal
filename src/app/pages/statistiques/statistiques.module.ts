@@ -14,6 +14,12 @@ import {NbCardModule} from '@nebular/theme';
 import {FormsModule} from '@angular/forms';
 import {ChartsModule} from '../charts/charts.module';
 import {NgxEchartsCoreModule} from 'ngx-echarts/core';
+import { MychartsComponent } from './nouveaux-nes/mycharts.component';
+import { NaturechartComponent } from './nature-deces/naturechart.component';
+import { CausechartComponent } from './selon-cause/causechart.component';
+import { SexechartComponent } from './sexe-deces/sexechart.component';
+import { EnchatschartComponent } from './deces-enfants/enchatschart.component';
+import { RegionchartComponent } from './region/regionchart.component';
 
 
 @NgModule({
@@ -21,7 +27,8 @@ import {NgxEchartsCoreModule} from 'ngx-echarts/core';
     NouveauxNesComponent,
     DecesEnfantsComponent,
     NatureDecesComponent,
-    PivotComponent, SexeDecesComponent, RegionComponent, SelonCauseComponent],
+    MychartsComponent,
+    PivotComponent, SexeDecesComponent, RegionComponent, SelonCauseComponent, MychartsComponent, NaturechartComponent, CausechartComponent, SexechartComponent, EnchatschartComponent, RegionchartComponent],
   imports: [
     CommonModule,
     StatistiquesRoutingModule,

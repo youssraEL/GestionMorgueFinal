@@ -108,6 +108,7 @@ export class MedcinsComponent implements OnInit {
         });
         this.init();
       });
+      this.init();
     }
   }
 

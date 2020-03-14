@@ -4,15 +4,14 @@ import {DecedesService} from '../../../@core/backend/common/services/Decedes.ser
 
 @Component({
   selector: 'ngx-nouveaux-nes',
-  template: `
-    <div echarts [options]="options" class="echart"></div>
-  `,
+  templateUrl: './nouveaux-nes.component.html',
   styleUrls: ['./nouveaux-nes.component.scss'],
   providers: [DecedesService],
 })
-export class NouveauxNesComponent implements AfterViewInit, OnDestroy {
+export class NouveauxNesComponent { /*implements AfterViewInit, OnDestroy {
   List = [];
   List1 = [];
+  mydate = new Date();
   m1: number; m3: number; m4: number; m5: number; m9: number; m10: number;
   m2: number; m6: number; m7: number; m8: number; m11: number; m12: number;
   options: any = {};
@@ -23,18 +22,48 @@ export class NouveauxNesComponent implements AfterViewInit, OnDestroy {
    this.serviceDecede.getAll().subscribe( data1 => {
       data1.forEach (  obj => { this.List.push(obj.mortNe, obj.dateNaissance);
       });
-      this.m2 = 0;
+      this.m2 = 0; this.m1 = 0; this.m3 = 0; this.m4 = 0; this.m5 = 0; this.m6 = 0; this.m7 = 0; this.m8 = 0; this.m9 = 0;
+     this.m10 = 0; this.m11 = 0; this.m12 = 0;
 
       for (let j = 0; j < this.List.length; j = j + 1) {
-        if (this.List[j] === 1) {
-          console.log('tt' + this.List);
-         if (this.List1[ j + 1 ].includes('2020-02-24 00:00:00')) {
-            this.m2 = this.m2 + 1;
-           console.log(this.m2);
+        if (this.List[j] === true) {
+          if (this.List[ j + 1 ].includes('2020-01')) {
+            this.m1 = this.m1 + 1;
           }
-          console.log(this.m2);
+         if (this.List[ j + 1 ].includes(this.mydate.getFullYear() + '-02')) {
+            this.m2 = this.m2 + 1;
+          }
+         if (this.List[ j + 1 ].includes('2020-03')) {
+            this.m3 = this.m3 + 1;
+          }
+          if (this.List[ j + 1 ].includes('2020-04')) {
+            this.m4 = this.m4 + 1;
+          }
+          if (this.List[ j + 1 ].includes('2020-05')) {
+            this.m5 = this.m5 + 1;
+          }
+          if (this.List[ j + 1 ].includes('2020-06')) {
+            this.m6 = this.m6 + 1;
+          }
+          if (this.List[ j + 1 ].includes('2020-07')) {
+            this.m7 = this.m7 + 1;
+          }
+          if (this.List[ j + 1 ].includes('2020-08')) {
+            this.m8 = this.m8 + 1;
+          }
+          if (this.List[ j + 1 ].includes('2020-09')) {
+            this.m9 = this.m9 + 1;
+          } if (this.List[ j + 1 ].includes('2020-10')) {
+            this.m10 = this.m10 + 1;
+          }
+          if (this.List[ j + 1 ].includes('2020-11')) {
+            this.m11 = this.m11 + 1;
+          } if (this.List[ j + 1 ].includes('2020-12')) {
+            this.m12 = this.m12 + 1;
+          }
         }
       }
+     console.log(this.List);
       console.log(this.m2);
       this.themeSubscription = this.theme.getJsTheme().subscribe(config => {
 
@@ -124,10 +153,10 @@ export class NouveauxNesComponent implements AfterViewInit, OnDestroy {
           ],
           series: [
             {
-              name: '2020',
+              name: this.mydate.getFullYear(),
               type: 'line',
               smooth: true,
-              data: [this.m1, this.m2, 11.1, 18.7, 48.3, 69.2, 231.6, 46.6, 55.4, 18.4, 10.3, 0.7],
+              data: [this.m1, this.m2, this.m3, this.m4, this.m5, this.m6, this.m7, this.m8, this.m9, this.m10, this.m11, this.m12],
             },
           ],
         };
@@ -137,4 +166,6 @@ export class NouveauxNesComponent implements AfterViewInit, OnDestroy {
   ngOnDestroy(): void {
     this.themeSubscription.unsubscribe();
   }
+}
+*/
 }

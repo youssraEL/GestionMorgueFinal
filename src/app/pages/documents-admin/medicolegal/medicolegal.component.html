@@ -68,12 +68,13 @@
     </div>
 
     <div class="row">
-      <div class="col-sm-12"><button (click)="generatePdf('open')"
+      <div class="col-sm-6"><button (click)="generatePdf('open')"
                                      class="btn btn-outline-primary fa-pull-right">
         <span>Certificat PDF</span></button>
-        <div *ngIf="isAdmin"><button (click)="save()" class="btn btn-outline-primary fa-pull-right" ><i class="fa fa-plus-circle"></i> Add</button>
       </div>
-      </div>
+      <div class="col-sm-6">
+        <button (click)="save()" class="btn btn-outline-primary fa-pull-right" ><i class="fa fa-plus-circle"></i> Add</button></div>
+
     </div>
   </nb-card-body>
 

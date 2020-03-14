@@ -2,7 +2,7 @@
 
 export class ApercuCorps {
 id: number;
-defunt: string;
+defunt: number;
 CenterMedicoLegal: string;
 dateDeclaration: Date;
 Medecin:  Medecins ;

@@ -139,11 +139,8 @@
                  id="num_register" placeholder="Num register">
         </div>
       </div>
-          <div class="col-sm-3">
-            <div class="form-group">
-              <label  class="label"></label><br>
-          <button (click)="add()" class="btn btn-outline-primary fa-pull-left">Valider</button>
-        </div>
+      <div *ngIf="Bulletins.remarque">
+        {{add()}}
       </div>
 
       </div>

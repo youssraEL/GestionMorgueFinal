@@ -14,6 +14,7 @@ import pdfFonts from 'pdfmake/build/vfs_fonts';
 import {DecedesList} from '../../../@core/backend/common/model/DecedesList';
 import {formatDate} from '@angular/common';
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
+import { Base64 } from 'js-base64';
 
 @Component({
   selector: 'ngx-bulletins',
@@ -702,6 +703,7 @@ n: string;
       this.h = obj.heure;
       this.s = obj.sexe;
       this.na = obj.nationalite;
+      this.na = obj.nationaliteAR;
       this.a = obj.adresse;
       this.dn = obj.dateNaissance;
       this.numR = obj.NumRegister;

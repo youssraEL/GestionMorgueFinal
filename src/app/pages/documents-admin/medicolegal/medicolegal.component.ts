@@ -120,6 +120,7 @@ isAdmin: boolean;
         });
         // this.init();
       });
+      this.init();
     }
   }
 
@@ -132,6 +133,7 @@ isAdmin: boolean;
         });
         window.alert('les donnes sont change avec succes');
       });
+      this.init();
     }
   }
   onDeleteConfirm(event) {
@@ -141,6 +143,7 @@ isAdmin: boolean;
         this.service.delete(event.data.id).subscribe(data => {
           console.log(data);
         });
+        this.init();
       } else {
         event.confirm.reject(event.data);
       }
