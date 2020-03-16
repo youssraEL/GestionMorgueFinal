@@ -55,19 +55,19 @@ export class TransfertCorpsComponent implements OnInit {
         title: 'CIN',
         type: 'string',
       },
-  declaration: {
+      declaration: {
         title: 'Date declaration',
         type: 'Date',
       },
-  Destination: {
+      Destination: {
         title: 'Destination',
         type: 'string',
       },
-  cercueilType: {
+      cercueilType: {
         title: 'Type cercueil',
         type: 'string',
       },
-  tel: {
+      tel: {
         title: 'Tel',
         type: 'number',
       },
@@ -130,10 +130,10 @@ export class TransfertCorpsComponent implements OnInit {
       this.trnsfrCorps.medecins = obj;
       this.serviceDecede.getById(this.defauntID).subscribe(objj => {
         this.trnsfrCorps.defunt = objj;
-      console.log(this.trnsfrCorps);
-      this.service.create(this.trnsfrCorps).subscribe(data => {
-        this.init();
-      }); });
+        console.log(this.trnsfrCorps);
+        this.service.create(this.trnsfrCorps).subscribe(data => {
+          this.init();
+        }); });
     });
     this.init();
     window.alert('Les données ont été ajoutées avec succès à la base de données');
@@ -344,7 +344,7 @@ export class TransfertCorpsComponent implements OnInit {
           fontSize: 12,
           margin: [20, 30, 50, 5],
         },
-       ],
+      ],
       styles: {
         style: {
           fontSize: 14,
@@ -366,20 +366,25 @@ export class TransfertCorpsComponent implements OnInit {
   nAR: string;
   e: string;
   pAR: string;
+  i = 0;
   actualise() {
-    this.serviceDecede.getByNumRegister(this.defauntID).subscribe(obj => {
-      this.DecedeHumain.push(new DecedesList(obj));
-      this.nAR = obj.nomAR;
-      this.pAR = obj.prenomAR;
-      this.n = obj.nom;
-      this.p = obj.prenom;
-      this.dd = formatDate(obj.dateDeces, 'dd-MM-yyyy', 'en-US', '+0530');
-      this.dn = formatDate(obj.dateNaissance, 'dd-MM-yyyy', 'en-US', '+0530');
-      this.m = obj.sexe;
-      if (this.m === 'Femme') {   this.e = 'أنثى'; }
+    if ( this.i !== 1) {
+      this.serviceDecede.getByNumRegister(this.defauntID).subscribe(obj => {
+        this.DecedeHumain.push(new DecedesList(obj));
+        this.nAR = obj.nomAR;
+        this.pAR = obj.prenomAR;
+        this.n = obj.nom;
+        this.p = obj.prenom;
+        this.dd = formatDate(obj.dateDeces, 'dd-MM-yyyy', 'en-US', '+0530');
+        this.dn = formatDate(obj.dateNaissance, 'dd-MM-yyyy', 'en-US', '+0530');
+        this.m = obj.sexe;
+        if (this.m === 'Femme') {   this.e = 'أنثى'; }
         if (this.m === 'Homme') {this.e = 'ذكر'; }
-      if (this.m === 'Indetermini') {this.e = 'غير محدد'; }
-    });
+        if (this.m === 'Indetermini') {this.e = 'غير محدد'; }
+      });
+      console.log(this.DecedeHumain);
+      this.i = 1;
+    }
   }
   pdf() {
     const doc = new jsPDF({

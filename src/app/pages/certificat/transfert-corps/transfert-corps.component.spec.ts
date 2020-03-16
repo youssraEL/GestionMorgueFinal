@@ -8,7 +8,7 @@ describe('TransfertCorpsComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ TransfertCorpsComponent ]
+      declarations: [ TransfertCorpsComponent ],
     })
     .compileComponents();
   }));

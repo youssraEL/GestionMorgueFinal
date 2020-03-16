@@ -66,13 +66,12 @@ export class ApercuDuCorpComponent implements OnInit {
   MedecinID: number;
   today = new Date();
   jstoday = '';
-
   constructor(private service: ApercuCorpsService, private userservice: UsersService,
               private serviceMedcin: MedecinsService, private serviceDecede: DecedesService) {
     this.jstoday = formatDate(this.today, 'dd-MM-yyyy', 'en-US', '+0530');
     this.serviceMedcin.getAll().subscribe(data => {
       data.forEach(obj => {
-        this.NomMedcin.push({nomAR: obj.nomAR + ' ', prenomAR: obj.prenomAR, id: obj.id});
+        this.NomMedcin.push({nom: obj.nom + ' ', prenom: obj.prenom, id: obj.id});
       });
     });
   }
@@ -155,7 +154,7 @@ export class ApercuDuCorpComponent implements OnInit {
       doc.addImage(data, 'JPEG', 200, 10, 50, 50);
       doc.text('المملكة المغربية' + '\n' + 'وزارة الداخلية' + '\n' + 'ولاية جهة تطوان-طنجة' + '\n' + 'قسم حفظ الصحة و السلامة العمومية' + '\n' + 'مصلحة الطب الشرعي', 225, 70, 'center');
       doc.text('معاينة الجثة', 210, 170, { align: 'center', lang: 'ar' });
-      doc.text( ' عاين الطبيب او المساعد الصحي' + ': '  + this.MedecinID, 400, 200, { align: 'right', lang: 'ar' });
+      doc.text( ' عاين الطبيب او المساعد الصحي' + ': '  + this.nARM + this.pARM, 400, 200, { align: 'right', lang: 'ar' });
       doc.text(' التابع للمركز الطبي الشرعي' + ': ' + this.ApercuCorps.CenterMedicoLegal, 400, 220, { align: 'right', lang: 'ar' });
       doc.text('  جثة المرحوم'  + ': ' + this.nAR + this.pAR, 400, 240, { align: 'right', lang: 'ar' });
       doc.text('  المزداد'  + ': '  + this.dn, 400, 260, { align: 'right', lang: 'ar' });
@@ -182,25 +181,46 @@ export class ApercuDuCorpComponent implements OnInit {
   DecedeHumain = [];
   n: string;
   p: string;
+  nM: string;
+  pM: string;
   dd = '';
   dn = '';
   m: string;
   nAR: string;
+  nARM: string;
   e: string;
   pAR: string;
+  pARM: string;
+  MedecinHumain = [];
+i = 0;
   actualise() {
-    this.serviceDecede.getByNumRegister(this.ApercuCorps.defunt).subscribe(obj => {
-      this.DecedeHumain.push(new DecedesList(obj));
-      this.nAR = obj.nomAR;
-      this.pAR = obj.prenomAR;
-      this.n = obj.nom;
-      this.p = obj.prenom;
-      this.dd = formatDate(obj.dateDeces, 'dd-MM-yyyy', 'en-US', '+0530');
-      this.dn = formatDate(obj.dateNaissance, 'dd-MM-yyyy', 'en-US', '+0530');
-      this.m = obj.natureMort;
-      if (this.m === 'Mort non naturel') {   this.e = 'وفاة غير طبيعية'; }
-      if (this.m === 'Mort naturel') {this.e = 'وفاة طبيعية'; }
-    });
+    if ( this.i !== 1) {
+      this.serviceDecede.getByNumRegister(this.ApercuCorps.defunt).subscribe(obj => {
+        this.DecedeHumain.push(new DecedesList(obj));
+        this.nAR = obj.nomAR;
+        this.pAR = obj.prenomAR;
+        this.n = obj.nom;
+        this.p = obj.prenom;
+        this.dd = formatDate(obj.dateDeces, 'dd-MM-yyyy', 'en-US', '+0530');
+        this.dn = formatDate(obj.dateNaissance, 'dd-MM-yyyy', 'en-US', '+0530');
+        this.m = obj.natureMort;
+        if (this.m === 'Mort non naturel') {
+          this.e = 'وفاة غير طبيعية';
+        }
+        if (this.m === 'Mort naturel') {
+          this.e = 'وفاة طبيعية';
+        }
+      });
+      console.log(this.DecedeHumain);
+      this.serviceMedcin.getById(this.MedecinID).subscribe(obj => {
+        this.MedecinHumain.push(
+        this.nARM = obj.nomAR,
+        this.pARM = obj.prenomAR,
+        this.nM = obj.nom,
+        this.pM = obj.prenom);
+      });
+      this.i = 1;
+    }
   }
 
   generatePdf(action = 'open') {
@@ -250,7 +270,7 @@ export class ApercuDuCorpComponent implements OnInit {
               text: 'Défunt  : ', style: 'style',
             },
             {
-              text: this.ApercuCorps.defunt, style: 'style',
+              text: this.n + ' ' + this.p, style: 'style',
             },
           ],
         },
@@ -260,7 +280,7 @@ export class ApercuDuCorpComponent implements OnInit {
               text: 'Médecin/ Assistant de santé  : ', style: 'style',
             },
             {
-              text: this.MedecinID, style: 'style',
+              text: this.nM + ' ' + this.pM, style: 'style',
             },
           ],
         },

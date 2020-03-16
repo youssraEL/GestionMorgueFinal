@@ -692,28 +692,32 @@ n: string;
   Pre: string;
   prov: string;
   jstoday = '';
+  i = 0;
   add() {
-    this.serviceD.getByNumRegister(this.Bulletins.remarque).subscribe(obj => {
-      this.DecedeHumain.push(new DecedesList(obj));
-      this.l = obj.lieuxDeces;
-      this.n = obj.nom;
-      this.p = obj.prenom;
-      this.dd = obj.dateDeces;
-      this.jstoday = formatDate(this.dd, 'dd-MM-yyyy', 'en-US', '+0530');
-      this.h = obj.heure;
-      this.s = obj.sexe;
-      this.na = obj.nationalite;
-      this.na = obj.nationaliteAR;
-      this.a = obj.adresse;
-      this.dn = obj.dateNaissance;
-      this.numR = obj.NumRegister;
-      this.e = obj.Etat;
-      this.pr = obj.profession;
-      this.cim = obj.causeImmdiate;
-      this.cini = obj.causeInitial;
-      this.CD = obj.communeD;
-      this.Pre = obj.prefectureD;
-      this.prov = obj.provinceD;
-    });
+    if ( this.i !== 1) {
+      this.serviceD.getByNumRegister(this.Bulletins.remarque).subscribe(obj => {
+        this.DecedeHumain.push(new DecedesList(obj));
+        this.l = obj.lieuxDeces;
+        this.n = obj.nom;
+        this.p = obj.prenom;
+        this.dd = obj.dateDeces;
+        this.jstoday = formatDate(this.dd, 'dd-MM-yyyy', 'en-US', '+0530');
+        this.h = obj.heure;
+        this.s = obj.sexe;
+        this.na = obj.nationalite;
+        this.na = obj.nationaliteAR;
+        this.a = obj.adresse;
+        this.dn = obj.dateNaissance;
+        this.numR = obj.NumRegister;
+        this.e = obj.Etat;
+        this.pr = obj.profession;
+        this.cim = obj.causeImmdiate;
+        this.cini = obj.causeInitial;
+        this.CD = obj.communeD;
+        this.Pre = obj.prefectureD;
+        this.prov = obj.provinceD;
+      });
+      this.i = 1;
+    }
   }
 }
