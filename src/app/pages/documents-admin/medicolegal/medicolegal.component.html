@@ -27,6 +27,10 @@
       </div>
     </div>
 
+    <div *ngIf="defunt && MedNom">
+      {{add()}}
+    </div>
+
     <div class="row">
       <div class="col-sm-6">
         <div class="form-group">
@@ -71,6 +75,10 @@
       <div class="col-sm-6"><button (click)="generatePdf('open')"
                                      class="btn btn-outline-primary fa-pull-right">
         <span>Certificat PDF</span></button>
+      </div>
+      <div class="col-sm-6"><button (click)="pdf()"
+                                    class="btn btn-outline-primary fa-pull-right">
+        <span>PDF</span></button>
       </div>
       <div class="col-sm-6">
         <button (click)="save()" class="btn btn-outline-primary fa-pull-right" ><i class="fa fa-plus-circle"></i> Add</button></div>

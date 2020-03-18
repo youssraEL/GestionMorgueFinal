@@ -14,8 +14,8 @@
             <div class="row">
               <div class="col-sm-6">
                 <div class="form-group">
-                  <label  class="label">Nom décédè</label>
-                  <input [(ngModel)]="decede.nom" class="form-control" type="string" nbInput fullWidth
+                  <label  class="label ">Nom décédè</label>
+                  <input [(ngModel)]="decede.nom" class="form-control" type="text" nbInput fullWidth  status="success"
                          id="Nom" placeholder="Nom décédè">
                 </div>
               </div>
@@ -57,8 +57,6 @@
 
               <div class="col-sm-6">
                 <nb-checkbox id="defaultCheck" [(ngModel)]="decede.mortNe"> S'agit-il d'un mort né</nb-checkbox>
-
-
               </div>
               <div class="col-sm-6">
                 <div class="form-group">
@@ -69,6 +67,7 @@
                 </div>
               </div>
             </div>
+
             <div class="row">
               <div class="col-sm-12">
                 <div *ngIf="this.decede.sexe==='Femme' &&(this.getAgeParAnnee(this.decede.dateNaissance, this.decede.dateDeces)<54) &&(this.getAgeParAnnee(this.decede.dateNaissance, this.decede.dateDeces)>12);then contenu"></div>
@@ -264,6 +263,7 @@
                 </div>
               </div>
             </div>
+
             <div class="row">
               <div class="col-sm-6">
                 <div class="form-group">
@@ -284,6 +284,7 @@
                 </div>
               </div>
             </div>
+
             <div class="row">
               <div class="col-sm-6">
                 <div class="form-group">
@@ -304,15 +305,63 @@
 
                 </div>
               </div>
+            </div>
+              <div *ngIf="(this.decede.natureMort === 'Mort naturel');then cont"></div>
+              <ng-template #cont>
+                <div class="col-sm-6">
+                  <div class="form-group">
+                    <label  class="label">Cause de mort</label>
+                    <nb-select [(ngModel)]="decede.causeMort"  class="type-select " nbSelect fullWidth
+                               placeholder="Cause de mort">
+                      <nb-option *ngFor="let t of CauseMort" [value]="t"> {{ t}}</nb-option>
+                    </nb-select>
+                  </div>
+                </div>
+              </ng-template>
+            <div *ngIf="(this.decede.natureMort === 'Mort non naturel');then contt"></div>
+            <ng-template #contt>
+              <div class="row">
               <div class="col-sm-6">
                 <div class="form-group">
-                  <label  class="label">Cause de mort</label>
-                  <nb-select [(ngModel)]="decede.causeMort"  class="type-select " nbSelect fullWidth
-                             placeholder="Cause de mort">
-                    <nb-option *ngFor="let t of CauseMort" [value]="t"> {{ t}}</nb-option>
+                  <label  class="label">Cause immédiate</label>
+                  <nb-select [(ngModel)]="immediateID"  class="type-select " nbSelect fullWidth
+                             placeholder="Cause immédiate">
+                    <nb-option *ngFor="let t of couseIni" [value]="t.id">{{t.code}}</nb-option>
                   </nb-select>
                 </div>
               </div>
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <label  class="label"> Cause initiale </label>
+                  <nb-select [(ngModel)]="initialeID"  class="type-select " nbSelect fullWidth
+                             placeholder="Cause initiale">
+                    <nb-option *ngFor="let t of couseIni" [value]="t.id">{{t.code}}</nb-option>
+                  </nb-select>
+
+                </div>
+              </div>
+              </div>
+            </ng-template>
+
+            <div class="row">
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label  class="label">Num de regestre : </label>
+                <input [(ngModel)]="decede.NumRegister" class="form-control" type="string" nbInput fullWidth
+                       id="num" placeholder="Num de regestre">
+
+              </div>
+            </div>
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <label  class="label"> Profession </label>
+                  <input [(ngModel)]="decede.profession" class="form-control" type="string" nbInput fullWidth
+                         id="profession" placeholder="Profession">
+
+                </div>
+              </div>
+
+
             </div>
 
             <div class="row">
@@ -357,28 +406,6 @@
               </div>
             </div>
 
-            <div class="row">
-
-              <div class="col-sm-6">
-                <div class="form-group">
-                  <label  class="label"> Cause initiale </label>
-                  <nb-select [(ngModel)]="initialeID"  class="type-select " nbSelect fullWidth
-                             placeholder="Cause initiale">
-                    <nb-option *ngFor="let t of couseIni" [value]="t.id">{{t.code}}</nb-option>
-                  </nb-select>
-
-                </div>
-              </div>
-              <div class="col-sm-6">
-                <div class="form-group">
-                  <label  class="label">Cause immédiate</label>
-                  <nb-select [(ngModel)]="immediateID"  class="type-select " nbSelect fullWidth
-                             placeholder="Cause immédiate">
-                    <nb-option *ngFor="let t of couseIni" [value]="t.id">{{t.code}}</nb-option>
-                  </nb-select>
-                </div>
-              </div>
-            </div>
 
             <div class="row">
               <div class="col-sm-6">
@@ -416,16 +443,6 @@
               </div>
             </div>
             <div class="row">
-
-
-              <div class="col-sm-6">
-                <div class="form-group">
-                  <label  class="label"> Profession </label>
-                  <input [(ngModel)]="decede.profession" class="form-control" type="string" nbInput fullWidth
-                         id="profession" placeholder="Profession">
-
-                </div>
-              </div>
               <div class="col-sm-6">
                 <div class="form-group">
                   <label  class="label">Une operation a-t-elle été effectuées lors des 4 dernières semaines ?</label>

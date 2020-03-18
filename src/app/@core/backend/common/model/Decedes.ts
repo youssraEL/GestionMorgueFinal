@@ -21,7 +21,7 @@ export class Decedes {
   lieuxDeces: string;
   Etat: string;
   obstacle: boolean;
-  NumRegister: string;
+  numRegister: string;
   typeCertifica: string;
   provinceD: string;
  prefectureD: string ;

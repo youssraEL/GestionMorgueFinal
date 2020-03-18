@@ -132,14 +132,25 @@
       </div>
     </div>
     <div class="row">
-      <div class="col-sm-9">
+      <div class="col-sm-6">
         <div class="form-group">
-          <label  class="label">Num register</label><br>
-          <input [(ngModel)]="Bulletins.remarque" class="form-control"  type="string" nbInput fullWidth
-                 id="num_register" placeholder="Num register">
+          <label  class="label">Decede</label><br>
+          <nb-select  [(ngModel)]="numRgtr" class="type-select "  nbSelect fullWidth
+                      placeholder="Num regestre" >
+            <nb-option *ngFor="let t of NomDecede" [value]="t.numRegister" > {{t.numRegister}} : {{ t.nom }} {{ t.prenom }}</nb-option>
+          </nb-select>
+      </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="form-group">
+          <label  class="label">Medecin</label><br>
+          <nb-select  [(ngModel)]="Bulletins.remarque" class="type-select "  nbSelect fullWidth
+                      placeholder="Num regestre" >
+            <nb-option *ngFor="let t of NomDMedcin" [value]="t.id" > {{t.id}} : {{ t.nom }} {{ t.prenom }}</nb-option>
+          </nb-select>
         </div>
       </div>
-      <div *ngIf="Bulletins.remarque">
+      <div *ngIf="numRgtr">
         {{add()}}
       </div>
 
@@ -163,19 +174,12 @@
           <nb-card-header>
             <div class="row">
               <div class="col-sm-6">
-                Les informations des décèdes
+                Les informations de décède
               </div>
             </div>
           </nb-card-header>
           <nb-card-body>
 
-            <ng2-smart-table
-              (createConfirm)="createConfirmD($event)"
-              [settings]="settingsD"
-              [source]="sourceD"
-              (deleteConfirm)="onDeleteConfirmD($event)"
-              (editConfirm)="onEditConfirmD($event)">
-            </ng2-smart-table>
           </nb-card-body>
         </nb-card>
 
@@ -185,19 +189,81 @@
           <nb-card-header>
             <div class="row">
               <div class="col-sm-6">
-                Les informations des médcins
+                Les informations de médecin
               </div>
             </div>
           </nb-card-header>
           <nb-card-body>
 
-            <ng2-smart-table
-              (createConfirm)="createMedcin($event)"
-              [settings]="settingsM"
-              [source]="sourceM"
-              (deleteConfirm)="onDeleteMedcin($event)"
-              (editConfirm)="onEditMedcin($event)">
-            </ng2-smart-table>
+            <nb-card-body>
+              <div class="row">
+                <div class="col-sm-6">
+                  <div class="form-group">
+                    <label  class="label">Nom Medecin</label>
+                    <input [(ngModel)]="this.nM" class="form-control" type="string" nbInput fullWidth
+                           id="nom" placeholder="Nom Medecin">
+
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <div class="form-group">
+                    <label  class="label">الإسم العائلي</label>
+                    <input [(ngModel)]="medcin.nomAR" class="form-control" type="string" nbInput fullWidth
+                           id="nomAR" placeholder="الإسم العائلي">
+
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-6">
+                  <div class="form-group">
+                    <label  class="label">Prénom Medecin</label>
+                    <input [(ngModel)]="medcin.prenom" class="form-control" type="string" nbInput fullWidth
+                           id="prenom" placeholder="Nom Medecin">
+
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <div class="form-group">
+                    <label  class="label">الإسم الشخصي</label>
+                    <input [(ngModel)]="medcin.prenomAR" class="form-control" type="string" nbInput fullWidth
+                           id="prenomAR" placeholder="الإسم الشخصي">
+
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-6">
+                  <div class="form-group">
+                    <label  class="label">Adresse de Medecin</label>
+                    <input [(ngModel)]="medcin.Adress" class="form-control" type="string" nbInput fullWidth
+                           id="adresse" placeholder="Adresse de Medecin">
+
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <div class="form-group">
+                    <label  class="label">العنوان</label>
+                    <input [(ngModel)]="medcin.AdressAR" class="form-control" type="string" nbInput fullWidth
+                           id="AdresseAR" placeholder="العنوان">
+
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-6">
+                  <div class="form-group">
+                    <label  class="label">CIN d'encadrant</label>
+                    <input [(ngModel)]="medcin.CIN" class="form-control" type="string" nbInput fullWidth
+                           id="cin" placeholder="CIN d'encadrant">
+
+                  </div>
+                </div>
+              </div>
+
+
+
+            </nb-card-body>
           </nb-card-body>
         </nb-card>
 

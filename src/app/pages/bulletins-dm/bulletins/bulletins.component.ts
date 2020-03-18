@@ -35,6 +35,7 @@ export class BulletinsComponent implements OnInit {
   diagnostique = ['Mort naturelle', 'Mort non naturelle'];
   cimetiere = ['Cimetière Almojahidine', 'Cimetière Sidi Omar'];
   data: any;
+  ListNum = [];
   private sourceD: Decedes;
   settings = {
     add: {
@@ -246,11 +247,22 @@ export class BulletinsComponent implements OnInit {
   };
   private source: Bulletins;
   private sourceM: Medecins;
+  numRgtr: number;
   isAdmin: boolean;
   DecedeHumain = [];
+  NomDecede = [];
+  NomDMedcin = [];
 
   constructor(private service: BulletinsService, private serviceD: DecedesService, private serviceM: MedecinsService,
               private serviceS: SmartTableData, private userservice: UsersService ) {
+    this.serviceD.getAll().subscribe( dataa => {
+      dataa.forEach (  obj => { this.NomDecede.push({nom: obj.nom, prenom: obj.prenom, id: obj.id, numRegister: obj.numRegister}); });
+   console.log(this.NomDecede);
+    });
+    this.serviceM.getAll().subscribe( dataa => {
+      dataa.forEach (  obj => { this.NomDMedcin.push({nom: obj.nom, prenom: obj.prenom, id: obj.id}); });
+      console.log(this.NomDMedcin);
+    });
   }
 
 
@@ -512,7 +524,15 @@ export class BulletinsComponent implements OnInit {
               ],
               [
                 {
-                  text: 'N° de l\'acte au registre  ' + this.Bulletins.remarque + '  N° de compostage: \n\n Lieu de déclaration:',
+                  text: 'N° de l\'acte au registre  ' + this.Bulletins.remarque + '  N° de compostage:' + this.compostage,
+                  colSpan: 2,
+                  border: [true, false, true, false],
+                },
+                '',
+              ],
+              [
+                {
+                  text: 'Lieu de déclaration:',
                   border: [true, false, false, false],
                 },
                 {border: [false, false, true, false],
@@ -680,6 +700,7 @@ n: string;
   h: string;
   s: string;
   na: string;
+  naa: string;
   a: string;
   dn: Date;
   numR: string;
@@ -695,28 +716,12 @@ n: string;
   i = 0;
   add() {
     if ( this.i !== 1) {
-      this.serviceD.getByNumRegister(this.Bulletins.remarque).subscribe(obj => {
-        this.DecedeHumain.push(new DecedesList(obj));
-        this.l = obj.lieuxDeces;
-        this.n = obj.nom;
-        this.p = obj.prenom;
-        this.dd = obj.dateDeces;
-        this.jstoday = formatDate(this.dd, 'dd-MM-yyyy', 'en-US', '+0530');
-        this.h = obj.heure;
-        this.s = obj.sexe;
-        this.na = obj.nationalite;
-        this.na = obj.nationaliteAR;
-        this.a = obj.adresse;
-        this.dn = obj.dateNaissance;
-        this.numR = obj.NumRegister;
-        this.e = obj.Etat;
-        this.pr = obj.profession;
-        this.cim = obj.causeImmdiate;
-        this.cini = obj.causeInitial;
-        this.CD = obj.communeD;
-        this.Pre = obj.prefectureD;
-        this.prov = obj.provinceD;
+      this.serviceD.getByNumRegister(this.numRgtr).subscribe(obj => {
+        this.DecedeHumain = obj;
       });
+    /*  this.serviceM.getById(this.Bulletins.remarque).subscribe(obj => {
+        this.MedecinHumain.push()
+      })*/
       this.i = 1;
     }
   }

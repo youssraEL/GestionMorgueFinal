@@ -22,7 +22,7 @@ export class DecedesList {
   lieuxDeces: string;
   Etat: string;
   obstacle: boolean;
-  NumRegister: string;
+  numRegister: string;
   typeCertifica: string;
 
   constructor(decede: Decedes ) {
@@ -46,7 +46,7 @@ export class DecedesList {
     this.lieuxDeces = decede.lieuxDeces;
     this.Etat = decede.Etat;
     this.obstacle = decede.obstacle;
-    this.NumRegister = decede.NumRegister;
+    this.numRegister = decede.numRegister;
     this.typeCertifica = decede.typeCertifica;
   }
 }
