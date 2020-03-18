@@ -10,23 +10,24 @@ import { Component } from '@angular/core';
   selector: 'ngx-one-column-layout',
   styleUrls: ['./one-column.layout.scss'],
   template: `
-    <nb-layout windowMode>
-      <nb-layout-header fixed>
-        <ngx-header></ngx-header>
-      </nb-layout-header>
-
-      <nb-sidebar class="menu-sidebar" tag="menu-sidebar" responsive>
-        <ng-content select="nb-menu"></ng-content>
+      <nb-sidebar>
+          <img style="width:150px; height:100px; margin: 0px 100px 100px 5px;"
+               src="assets/images/Morgue.svg">
       </nb-sidebar>
+      <nb-layout windowMode>
+          <nb-sidebar class="menu-sidebar" tag="menu-sidebar" style="font-size: 25px;
+                              background:lightgrey">
+              <ng-content select="nb-menu" style="margin-top: 50px"></ng-content>
+          </nb-sidebar>
 
-      <nb-layout-column>
-        <ng-content select="router-outlet"></ng-content>
-      </nb-layout-column>
+          <nb-layout-column  tag="menu-sidebar" style="background-color: #9E9E9E">
+              <ng-content select="router-outlet"></ng-content>
+          </nb-layout-column>
 
-      <nb-layout-footer fixed>
-        <ngx-footer></ngx-footer>
-      </nb-layout-footer>
-    </nb-layout>
+          <nb-layout-footer fixed>
+              <ngx-footer></ngx-footer>
+          </nb-layout-footer>
+      </nb-layout>
   `,
 })
 export class OneColumnLayoutComponent {}

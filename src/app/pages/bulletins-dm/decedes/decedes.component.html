@@ -464,15 +464,6 @@
                 </ng-template>
               </div>
             </div>
-
-
-            <div class="row">
-              <div class="col-md-12">
-                <button (click)="generatePdf('open')"
-                        class="btn btn-outline-primary fa-pull-right">
-                  <span>PDF</span></button>
-            </div>
-            </div>
           </nb-card-body>
         </nb-card>
 
@@ -553,13 +544,10 @@
 
       </nb-tab>
     </nb-tabset>
-    <div class="row">
-      <div class="col-sm-6">
-        <div *ngIf="isAdmin"><button (click)="save()" class="btn btn-outline-primary fa-pull-right" ><i class="fa fa-plus-circle"></i> Add</button></div>
-      </div>
-      </div>
-
-
+    <div class="text-center">
+      <button *ngIf="isAdmin" class="btn mr-1 "  (click)="save()" type="submit" nbButton  status="info">Register</button>
+      <button class="btn btn-secondary mr-1" (click)="generatePdf('open')" type="submit" nbButton  status="info" outline>PDF</button>
+    </div>
    </nb-card-body>
 </nb-card>
 

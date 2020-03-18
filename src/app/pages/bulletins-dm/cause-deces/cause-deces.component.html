@@ -37,7 +37,10 @@
         </div>
       </div>
     </div>
-
+    <div class="text-center">
+      <button *ngIf="isAdmin" class="btn mr-1 "  (click)="save()" type="submit" nbButton  status="info">Register</button>
+      <button class="btn btn-secondary mr-1"  type="submit" nbButton  status="info" outline>Cancel</button>
+    </div>
 
 
 </nb-card-body>

@@ -11,7 +11,7 @@
         <div class="form-group">
           <label  class="label">Médecin</label>
           <nb-select [(ngModel)]="MedcinID"  class="type-select " nbSelect fullWidth
-                     placeholder="Médcin">
+                     placeholder="Médcin" status="danger">
             <nb-option *ngFor="let t of NomMedcin" [value]="t.id">{{t.nom}} {{t.prenom}}</nb-option>
           </nb-select>
 
@@ -21,7 +21,7 @@
         <div class="form-group">
           <label  class="label">Num denregistrmrnt</label>
           <input [(ngModel)]="defauntID" class="form-control" type="string" nbInput fullWidth
-                 id="num" placeholder="Num">
+                 id="num" placeholder="Num" status="danger">
         </div>
       </div>
     <div *ngIf="defauntID">
@@ -35,7 +35,7 @@
         <div class="form-group">
           <label  class="label">Date declaration</label>
           <input [(ngModel)]="trnsfrCorps.declaration" class="form-control" type="Date" nbInput fullWidth
-                 id="dateDec" placeholder="Date declaration">
+                 id="dateDec" placeholder="Date declaration" status="danger">
 
         </div>
       </div>
@@ -43,7 +43,7 @@
         <div class="form-group">
           <label  class="label">Déclarant</label>
           <input [(ngModel)]="trnsfrCorps.Declarant" class="form-control" type="string" nbInput fullWidth
-                 id="declarant" placeholder="Declarant">
+                 id="declarant" placeholder="Declarant" status="danger">
 
         </div>
       </div>
@@ -54,7 +54,7 @@
         <div class="form-group">
           <label  class="label">CIN declarant</label>
           <input [(ngModel)]="trnsfrCorps.CIN" class="form-control" type="string" nbInput fullWidth
-                 id="CINdec" placeholder="CIN Declarant">
+                 id="CINdec" placeholder="CIN Declarant" status="danger">
 
         </div>
       </div>
@@ -62,7 +62,7 @@
         <div class="form-group">
           <label  class="label">N° téléphone </label>
           <input [(ngModel)]="trnsfrCorps.tel" class="form-control" type="string" nbInput fullWidth
-                 id="tel" placeholder="Tel..">
+                 id="tel" placeholder="Tel.." status="danger">
 
         </div>
       </div>
@@ -73,7 +73,7 @@
         <div class="form-group">
           <label  class="label">Le corps sera transporté en cercueil </label>
           <nb-select  [(ngModel)]="trnsfrCorps.cercueilType" class="type-select "  nbSelect fullWidth
-                      placeholder="" >
+                      placeholder="" status="danger">
             <nb-option *ngFor="let t of cercueil" [value]="t" >{{ t }}</nb-option>
           </nb-select>
       </div>
@@ -82,7 +82,7 @@
         <div class="form-group">
           <label  class="label">Destination du corps</label>
           <nb-select  [(ngModel)]="trnsfrCorps.Destination" class="type-select "  nbSelect fullWidth
-                      placeholder="Destination du corps" >
+                      placeholder="Destination du corps" status="danger">
             <nb-option *ngFor="let t of destinationCorps" [value]="t" >{{ t }}</nb-option>
           </nb-select>
 
@@ -97,7 +97,7 @@
         <div class="form-group">
           <label  class="label">Fourgon mortuaire Mle </label>
           <input [(ngModel)]="trnsfrCorps.mortuaire" class="form-control" type="string" nbInput fullWidth
-                 id="fourgon" placeholder="Fourgon mortuaire Mle">
+                 id="fourgon" placeholder="Fourgon mortuaire Mle" status="danger">
 
         </div>
       </div>
@@ -106,7 +106,7 @@
         <div class="form-group">
           <label  class="label">la sociéte ou l'administration chargé de l'inhumation ou du transfert</label>
           <input [(ngModel)]="trnsfrCorps.inhumationSociete" class="form-control" type="string" nbInput fullWidth
-                 id="txt" placeholder="">
+                 id="txt" placeholder="" status="danger">
 
         </div>
       </div>
@@ -117,23 +117,16 @@
         <div class="form-group">
           <label  class="label">Remarque </label>
           <textarea [(ngModel)]="trnsfrCorps.remarque" class="form-control" type="string"  fullWidth
-                 id="Remarque" placeholder="Remarque...">
+                 id="Remarque" placeholder="Remarque..." status="danger">
           </textarea>
 
         </div>
       </div>
     </div>
-
-    <div class="row">
-      <div class="col-sm-12"><button (click)="generatePdf('open')"
-                                     class="btn btn-outline-primary fa-pull-right">
-        <span>Certificat PDF </span></button>
-        <button (click)="pdf()"
-                class="btn btn-outline-primary fa-pull-right">
-          <span>Certificat PDF Arabic</span></button>
-        <div *ngIf="isAdmin"> <button (click)="save()" class="btn btn-outline-primary fa-pull-right" ><i class="fa fa-plus-circle"></i> Add</button>
-      </div>
-      </div>
+    <div class="text-center">
+      <button *ngIf="isAdmin" class="btn mr-1 "  (click)="save()" type="submit" nbButton  status="danger">Register</button>
+      <button class="btn btn-secondary mr-1" (click)="generatePdf('open')" type="submit" nbButton  status="danger" outline>PDF</button>
+      <button class="btn btn-secondary mr-1" (click)="pdf()" type="submit" nbButton  status="danger" outline>PDF Arabic</button>
     </div>
   </nb-card-body>
 </nb-card>

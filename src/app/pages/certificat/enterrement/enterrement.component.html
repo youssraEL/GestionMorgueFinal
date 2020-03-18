@@ -12,14 +12,14 @@
         <div class="form-group">
           <label  class="label">Défunt</label>
           <input [(ngModel)]="Enterrement.defunt" class="form-control" type="string" nbInput fullWidth
-                 id="defunt" placeholder="Defunt">
+                 id="defunt" placeholder="Defunt" status="danger">
         </div>
       </div>
       <div class="col-sm-12">
         <div class="form-group">
           <label  class="label">Ville</label>
           <input [(ngModel)]="Enterrement.ville" class="form-control" type="string" nbInput fullWidth
-                 id="centre" placeholder="Ville">
+                 id="centre" placeholder="Ville" status="danger">
 
         </div>
       </div>
@@ -29,17 +29,14 @@
         <div class="form-group">
           <label  class="label">Date declaration</label>
           <input [(ngModel)]="Enterrement.declaration" class="form-control" type="Date" nbInput fullWidth
-                 id="dateDec" placeholder="Declarant">
+                 id="dateDec" placeholder="Declarant" status="danger">
 
         </div>
       </div>
     </div>
-    <div class="row">
-      <div class="col-sm-12"><button (click)="generatePdf('open')"
-                                     class="btn btn-outline-primary fa-pull-right">
-        <span>Certificat PDF</span></button>
-        <div *ngIf="isAdmin"> <button (click)="save()" class="btn btn-outline-primary fa-pull-right" ><i class="fa fa-plus-circle"></i> Add</button></div>
-      </div>
+    <div class="text-center">
+      <button *ngIf="isAdmin" class="btn mr-1 "  (click)="save()" type="submit" nbButton  status="danger">Register</button>
+      <button class="btn btn-secondary" (click)="generatePdf('open')" type="submit" nbButton  status="danger" outline>PDF</button>
     </div>
   </nb-card-body>
 </nb-card>

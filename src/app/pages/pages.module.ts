@@ -12,7 +12,6 @@ import { PagesRoutingModule } from './pages-routing.module';
 import { ThemeModule } from '../@theme/theme.module';
 import { MiscellaneousModule } from './miscellaneous/miscellaneous.module';
 import { PagesMenu } from './pages-menu';
-import { ECommerceModule } from './e-commerce/e-commerce.module';
 import { NbMenuModule } from '@nebular/theme';
 import { AuthModule } from '../@auth/auth.module';
 import { BulletinsDMComponent } from './bulletins-dm/bulletins-dm.component';
@@ -34,7 +33,6 @@ const PAGES_COMPONENTS = [
     BulletinsDMModule,
     DocumentsAdminModule,
     CertificatModule,
-    ECommerceModule,
     NbMenuModule,
     MiscellaneousModule,
     AuthModule.forRoot(),
