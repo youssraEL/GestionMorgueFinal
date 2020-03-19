@@ -13,14 +13,19 @@ export class PagesMenu {
   getMenu(): Observable<NbMenuItem[]> {
     const dashboardMenu = [
       {
-        title: 'Dashboard',
-        icon: 'home-outline',
+        title: '',
         link: '/pages/iot-dashboard',
         children: undefined,
       },
     ];
 
     const menu = [
+      {
+        title: 'Dashboard',
+        icon: 'home-outline',
+        link: '/pages/iot-dashboard',
+        children: undefined,
+      },
       {
         title: '',
         group: true,
@@ -146,7 +151,23 @@ export class PagesMenu {
         ],
       },
     ];
+    const Paramètres = [
+      {
+        title: 'Paramètres',
+        icon: 'settings-outline',
+        children: [
+          {
+            title: 'Profiel',
+            link: '/auth/register',
+          },
+          {
+            title: 'Logout',
+            link: '/auth/logout',
+          },
+        ],
+      },
+    ];
 
-    return of([...dashboardMenu, ...menu]);
+    return of([...dashboardMenu, ...menu, ...Paramètres]);
   }
 }

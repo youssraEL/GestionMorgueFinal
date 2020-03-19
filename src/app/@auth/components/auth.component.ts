@@ -13,8 +13,10 @@ import { takeWhile } from 'rxjs/operators';
   selector: 'ngx-auth',
   styleUrls: ['./auth.component.scss'],
   template: `
-    <nb-layout>
-      <nb-layout-column>
+    <nb-layout style="background-color: #206ea1">
+        <nb-layout-column style="background-color: #206ea1">
+        </nb-layout-column>
+      <nb-layout-column style="background-color: #206ea1">
         <nb-card>
           <nb-card-header>
             <nav class="navigation">
@@ -30,6 +32,8 @@ import { takeWhile } from 'rxjs/operators';
           </nb-card-body>
         </nb-card>
       </nb-layout-column>
+        <nb-layout-column style="background-color: #206ea1">
+        </nb-layout-column>
     </nb-layout>
   `,
 })

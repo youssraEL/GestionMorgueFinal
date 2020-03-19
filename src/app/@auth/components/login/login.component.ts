@@ -19,6 +19,7 @@ import { InitUserService } from '../../../@theme/services/init-user.service';
 
 @Component({
   selector: 'ngx-login',
+  styleUrls: ['./login.component.scss'],
   templateUrl: './login.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

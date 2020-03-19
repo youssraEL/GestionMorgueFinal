@@ -1,11 +1,5 @@
-<!--
-  ~ Copyright (c) Akveo 2019. All Rights Reserved.
-  ~ Licensed under the Single Application / Multi Application License.
-  ~ See LICENSE_SINGLE_APP / LICENSE_MULTI_APP in the 'docs' folder for license information on type of purchased license.
-  -->
 
-    <h1 id="title" class="title">Login</h1>
-    <p class="sub-title">Hello! Log in with your email.</p>
+<div class="text-center"><img style="width:50%; margin-top:0px" src="assets/images/armoirie_off.png"></div>
 
     <nb-alert *ngIf="showMessages.error && errors?.length && !submitted" outline="danger" role="alert">
       <p class="alert-title"><b>Oh Erreur!</b></p>
@@ -38,7 +32,6 @@
       <div class="form-control-group">
     <span class="label-with-link">
       <label class="label" for="input-password">Password:</label>
-      <a class="forgot-password caption-2" routerLink="../request-password">Forgot Password?</a>
     </span>
         <input  nbInput
                 fullWidth
@@ -64,35 +57,6 @@
         Log In
       </button>
     </div>
-
-    <section *ngIf="socialLinks && socialLinks.length > 0" class="links" aria-label="Social sign in">
-      or enter with:
-      <div class="socials">
-        <ng-container *ngFor="let socialLink of socialLinks">
-          <a *ngIf="socialLink.link"
-             [routerLink]="socialLink.link"
-             [attr.target]="socialLink.target"
-             [attr.class]="socialLink.icon"
-             [class.with-icon]="socialLink.icon">
-            <nb-icon *ngIf="socialLink.icon; else title" [icon]="socialLink.icon"></nb-icon>
-            <ng-template #title>{{ socialLink.title }}</ng-template>
-          </a>
-          <a *ngIf="socialLink.url"
-             [attr.href]="socialLink.url"
-             [attr.target]="socialLink.target"
-             [attr.class]="socialLink.icon"
-             [class.with-icon]="socialLink.icon">
-            <nb-icon *ngIf="socialLink.icon; else title" [icon]="socialLink.icon"></nb-icon>
-            <ng-template #title>{{ socialLink.title }}</ng-template>
-          </a>
-        </ng-container>
-      </div>
-    </section>
-
-    <section class="another-action" aria-label="Register">
-      Don't have an account? <a class="text-link" routerLink="../register">Register</a>
-    </section>
-
 
 
 
