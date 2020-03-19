@@ -25,7 +25,7 @@ export class MedicolegalComponent implements OnInit {
 NomMedecin = [];
   NomDecede = [];
   settings = {
-    add: {
+ /*add: {
       addButtonContent: '<i class="nb-plus"></i>',
       createButtonContent: '<i class="nb-checkmark"></i>',
       cancelButtonContent: '<i class="nb-close"></i>',
@@ -42,9 +42,61 @@ NomMedecin = [];
       deleteButtonContent: '<i class="nb-trash"></i>',
       confirmDelete: true,
 
+    },*/
+  actions: {
+      add: true,
+      edit: true,
+      delete: true,
+      custom: [
+        {
+          name: 'visiterrecord',
+          title: '<i class="nb-list"></i>',
+        },
+        {
+          name: 'patientrecord',
+          title: '<i class="nb-info"></i>',
+        },
+        {
+          editButtonContent: '<i class="nb-edit"></i>',
+          saveButtonContent: '<i class="nb-checkmark"></i>',
+          cancelButtonContent: '<i class="nb-close"></i>',
+          confirmSave: true,
+          mode: 'inline',
+        },
+        {
+          addButtonContent: '<i class="nb-plus"></i>',
+          createButtonContent: '<i class="nb-checkmark"></i>',
+          cancelButtonContent: '<i class="nb-close"></i>',
+          confirmCreate: true,
+        },
+        {
+          deleteButtonContent: '<i class="nb-trash"></i>',
+          confirmDelete: true,
+
+        },
+      ],
     },
+    /*actions: {
+      custom: [
+        {
+          name: 'yourAction',
+          title: '<i class="ion-document" title="YourAction"></i>',
+        },
+        {
+          name: 'editAction',
+          title: '<i class="ion-edit" title="Edit"></i>',
+        },
+        {
+          name: 'deleteAction',
+          title: '<i class="far fa-trash-alt" title="delete"></i>',
+        },
+      ],
+      add: false,
+      edit: false,
+      delete: false,
+    },*/
     columns: {
-      medecin: {
+        medecin: {
         title: 'Médcin',
         type: 'Medecins',
       },
@@ -320,5 +372,27 @@ i = 0;
     doc.text( ' طنجة في' + this.jstoday, 150, 400, { align: 'right', lang: 'ar' });
     doc.text('إمضاء ', 100, 420);
     doc.save('pdf.pdf');
+  }
+
+  onCustomConfirm(event) {
+    switch ( event.action) {
+      case 'visiterrecord':
+        if (this.isAdmin) {
+         /* this.visiteService.getByPatientId(event.data.id).subscribe(data => {
+            this.router.navigateByUrl( 'pages/patient/VisiteInfo' , {queryParams: { data: data}});
+          });*/
+        } else {
+          window.alert('worning no acess ');
+        }
+        break;
+      case 'patientrecord':
+        /*const dialogRef = this.dialog.open(PatientInfoComponent, {
+          width: '900px',
+          backdropClass: 'custom-dialog-backdrop-class',
+          panelClass: 'custom-dialog-panel-class',
+          data: {pageValue: event.data },
+        });*/
+        break;
+    }
   }
 }
