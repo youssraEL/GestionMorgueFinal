@@ -33,6 +33,22 @@ LieuDecesAR: string;
 nationaliteAR: string;
 FilsAR: string;
   adresseAR: string;
+Autopsie: string;
+   operation: string;
+   ageMere: string;
+   AgeGestationnel: string;
+   GrossesseMultiple: string;
+   PoidsNaissance: string;
+   decesGrossesse: string;
+   decesFemme: string;
+   ContribueGros: string;
+   maladie: string;
+DateServ: Date;
+   LieuServ: string;
+   CirconServ: string;
+   resultatsAutopsie: string;
+dateOperation: Date;
+   MotifOperation: string;
   constructor() {
   }
 }

@@ -117,21 +117,11 @@
       <div class="col-sm-6">
         <div class="form-group">
           <label  class="label">Compostage</label>
-          <input [(ngModel)]="compostage" class="form-control"  type="string" nbInput fullWidth
+          <input [(ngModel)]="this.Bulletins.compostage" class="form-control"  type="string" nbInput fullWidth
                  id="Compostage" placeholder="Compostage">
 
         </div>
       </div>
-      <div class="col-sm-6">
-        <div class="form-group">
-          <label  class="label">Constatation faite par</label>
-          <input [(ngModel)]="constation" class="form-control"  type="string" nbInput fullWidth
-                 id="constation" placeholder="Constatation faite par">
-
-        </div>
-      </div>
-    </div>
-    <div class="row">
       <div class="col-sm-6">
         <div class="form-group">
           <label  class="label">Decede</label><br>
@@ -139,22 +129,20 @@
                       placeholder="Num regestre" >
             <nb-option *ngFor="let t of NomDecede" [value]="t.numRegister" > {{t.numRegister}} : {{ t.nom }} {{ t.prenom }}</nb-option>
           </nb-select>
+        </div>
       </div>
-      </div>
+    </div>
+    <div class="row">
       <div class="col-sm-6">
         <div class="form-group">
           <label  class="label">Medecin</label><br>
-          <nb-select  [(ngModel)]="Bulletins.remarque" class="type-select "  nbSelect fullWidth
+          <nb-select  [(ngModel)]="medcinid" class="type-select "  nbSelect fullWidth
                       placeholder="Num regestre" >
             <nb-option *ngFor="let t of NomDMedcin" [value]="t.id" > {{t.id}} : {{ t.nom }} {{ t.prenom }}</nb-option>
           </nb-select>
         </div>
       </div>
-      <div *ngIf="numRgtr">
-        {{add()}}
-      </div>
-
-      </div>
+    </div>
 
     <div class="row">
       <div class="col-md-12">
@@ -166,25 +154,14 @@
 
       </div>
     </div>
-    <!--    </div>-->
-
+  </nb-card-body>
+</nb-card>
+<div *ngIf="medcinid && numRgtr ">
+  {{add()}}
+<nb-card>
+  <nb-card-body>
     <nb-tabset>
-      <nb-tab tabTitle="Informations de decede">
-        <nb-card>
-          <nb-card-header>
-            <div class="row">
-              <div class="col-sm-6">
-                Les informations de décède
-              </div>
-            </div>
-          </nb-card-header>
-          <nb-card-body>
-
-          </nb-card-body>
-        </nb-card>
-
-      </nb-tab>
-      <nb-tab tabTitle="Informations de médcin">
+       <nb-tab tabTitle="Informations de Médecin">
         <nb-card>
           <nb-card-header>
             <div class="row">
@@ -194,88 +171,318 @@
             </div>
           </nb-card-header>
           <nb-card-body>
-
-            <nb-card-body>
-              <div class="row">
-                <div class="col-sm-6">
-                  <div class="form-group">
-                    <label  class="label">Nom Medecin</label>
-                    <input [(ngModel)]="this.nM" class="form-control" type="string" nbInput fullWidth
-                           id="nom" placeholder="Nom Medecin">
-
-                  </div>
-                </div>
-                <div class="col-sm-6">
-                  <div class="form-group">
-                    <label  class="label">الإسم العائلي</label>
-                    <input [(ngModel)]="medcin.nomAR" class="form-control" type="string" nbInput fullWidth
-                           id="nomAR" placeholder="الإسم العائلي">
-
-                  </div>
+            <div class="row">
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <label  class="label">Nom Medecin</label>
+                     <output [value]="this.MedecinHumain.nom" class="form-control" type="string" fullWid >
+                  </output>
                 </div>
               </div>
-              <div class="row">
-                <div class="col-sm-6">
-                  <div class="form-group">
-                    <label  class="label">Prénom Medecin</label>
-                    <input [(ngModel)]="medcin.prenom" class="form-control" type="string" nbInput fullWidth
-                           id="prenom" placeholder="Nom Medecin">
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label  class="label">الإسم العائلي</label>
+            <output [value]="this.MedecinHumain.nomAR" class="form-control" type="string" fullWidth >
+                </output>
+              </div>
+            </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <label  class="label">Prénom Medecin</label>
+                  <output [value]="this.MedecinHumain.prenom" class="form-control" type="string" fullWid >
+                  </output>
 
-                  </div>
-                </div>
-                <div class="col-sm-6">
-                  <div class="form-group">
-                    <label  class="label">الإسم الشخصي</label>
-                    <input [(ngModel)]="medcin.prenomAR" class="form-control" type="string" nbInput fullWidth
-                           id="prenomAR" placeholder="الإسم الشخصي">
-
-                  </div>
                 </div>
               </div>
-              <div class="row">
-                <div class="col-sm-6">
-                  <div class="form-group">
-                    <label  class="label">Adresse de Medecin</label>
-                    <input [(ngModel)]="medcin.Adress" class="form-control" type="string" nbInput fullWidth
-                           id="adresse" placeholder="Adresse de Medecin">
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <label  class="label">الإسم الشخصي</label>
+                  <output [value]="this.MedecinHumain.prenomAR" class="form-control" type="string" fullWid >
+                  </output>
 
-                  </div>
-                </div>
-                <div class="col-sm-6">
-                  <div class="form-group">
-                    <label  class="label">العنوان</label>
-                    <input [(ngModel)]="medcin.AdressAR" class="form-control" type="string" nbInput fullWidth
-                           id="AdresseAR" placeholder="العنوان">
-
-                  </div>
                 </div>
               </div>
-              <div class="row">
-                <div class="col-sm-6">
-                  <div class="form-group">
-                    <label  class="label">CIN d'encadrant</label>
-                    <input [(ngModel)]="medcin.CIN" class="form-control" type="string" nbInput fullWidth
-                           id="cin" placeholder="CIN d'encadrant">
+            </div>
+            <div class="row">
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <label  class="label">Adresse de Medecin</label>
+                  <output [value]="this.MedecinHumain.Adress" class="form-control" type="string" fullWid >
+                  </output>
 
-                  </div>
                 </div>
               </div>
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <label  class="label">العنوان</label>
+                  <output [value]="this.MedecinHumain.AdressAR" class="form-control" type="string" fullWid >
+                  </output>
 
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <label  class="label">CIN d'encadrant</label>
+                  <output [value]="this.MedecinHumain.CIN" class="form-control" type="string" fullWid >
+                  </output>
 
-
-            </nb-card-body>
+                </div>
+              </div>
+            </div>
           </nb-card-body>
         </nb-card>
+       </nb-tab>
+      <nb-tab tabTitle="Informations de décéde">
+        <nb-card>
+          <nb-card-header>
+            <div class="row">
+              <div class="col-sm-6">
+                Les informations de decede
+              </div>
+            </div>
+          </nb-card-header>
+          <nb-card-body>
+            <div class="row">
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <label  class="label ">Nom décédè</label>
+                  <output [value]="this.DecedeHumain.nom" class="form-control" type="string" fullWid >
+                  </output>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <label  class="label">Prénom décédè</label>
+                  <output [value]="this.DecedeHumain.prenom" class="form-control" type="string" fullWid >
+                  </output>
 
 
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <label  class="label">Sexe</label>
+                  <output [value]="this.DecedeHumain.sexe" class="form-control" type="string" fullWid >
+                  </output>
+                </div>
+              </div>
+
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <label  class="label">Date décès</label>
+                  <output [value]="this.DecedeHumain.dateDeces" class="form-control" type="string" fullWid >
+                  </output>
+
+                </div>
+              </div>
+            </div>
 
 
+            <div class="row">
+
+              <div class="col-sm-6">
+                <label  class="label">S'agit-il d'un mort né</label>>
+                <output [value]="this.DecedeHumain.mortNe" class="form-control" type="string" fullWid >
+                </output>
+              </div>
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <label  class="label">Date de naissance</label>
+                  <output [value]="this.DecedeHumain.dateNaissance" class="form-control" type="string" fullWid >
+                  </output>
+
+                </div>
+              </div>
+            </div>
+
+
+            <div class="row">
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <label  class="label">Lieu de naissance</label>
+                  <output [value]="this.DecedeHumain.LieuNaiss" class="form-control" type="string" fullWid >
+                  </output>
+
+                </div>
+              </div>
+
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <label  class="label">Nationalité</label>
+                  <output [value]="this.DecedeHumain.nationalite" class="form-control" type="string" fullWid >
+                  </output>
+
+                </div>
+              </div>
+
+            </div>
+
+            <div class="row">
+
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <label  class="label">CIN</label>
+                  <output [value]="this.DecedeHumain.CIN" class="form-control" type="string" fullWid >
+                  </output>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <label  class="label">Adresse</label>
+                  <output [value]="this.DecedeHumain.adresse" class="form-control" type="string" fullWid >
+                  </output>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <label  class="label">Etat Matrimonial</label>
+                  <output [value]="this.DecedeHumain.Etat" class="form-control" type="string" fullWid >
+                  </output>
+
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <label  class="label">Fille ou fils de : </label>
+                  <output [value]="this.DecedeHumain.fils" class="form-control" type="string" fullWid >
+                  </output>
+
+                </div>
+              </div>
+
+            </div>
+
+            <div class="row">
+
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <label  class="label">Heure de décès</label>
+                  <output [value]="this.DecedeHumain.heure" class="form-control" type="string" fullWid >
+                  </output>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <label  class="label">Lieu Décès</label>
+                  <output [value]="this.DecedeHumain.lieuxDeces" class="form-control" type="string" fullWid >
+                  </output>
+
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <label  class="label">Préfecture /Province</label>
+                  <output [value]="this.DecedeHumain.provinceD" class="form-control" type="string" fullWid >
+                  </output>
+
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <label  class="label">Préfecture d'arrondissements</label>
+                  <output [value]="this.DecedeHumain.prefectureD" class="form-control" type="string" fullWid >
+                  </output>
+
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <label  class="label">Commune /Arrondissements</label>
+                  <output [value]="this.DecedeHumain.communeD" class="form-control" type="string" fullWid >
+                  </output>
+                </div>
+              </div>
+
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <label  class="label"> Nature du mort </label>
+                  <output [value]="this.DecedeHumain.natureMort" class="form-control" type="string" fullWid >
+                  </output>
+
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <label  class="label">Num de regestre : </label>
+                  <output [value]="this.DecedeHumain.numRegister" class="form-control" type="string" fullWid >
+                  </output>
+
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <label  class="label"> Profession </label>
+                  <output [value]="this.DecedeHumain.profession" class="form-control" type="string" fullWid >
+                  </output>
+
+                </div>
+              </div>
+
+
+            </div>
+
+            <div class="row">
+              <div class="col-sm-6">
+                <label  class="label">Obstacle medicolégal</label>
+                <output [value]="this.DecedeHumain.obstacle" class="form-control" type="string" fullWid >
+                </output>
+              </div>
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <label  class="label">Autopsie</label>
+                  <output [value]="this.DecedeHumain.obstacle" class="form-control" type="string" fullWid >
+                  </output>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <label  class="label">Une operation a-t-elle été effectuées lors des 4 dernières semaines ?</label>
+                  <output [value]="this.DecedeHumain.obstacle" class="form-control" type="string" fullWid >
+                  </output>
+                </div>
+              </div>
+            </div>
+
+
+            <div class="row">
+              <div class="col-md-12">
+                <button (click)="generatePdf('open')"
+                        class="btn btn-outline-primary fa-pull-right">
+                  <span>PDF</span></button>
+              </div>
+            </div>
+          </nb-card-body>
+        </nb-card>
       </nb-tab>
+
     </nb-tabset>
+
 
   </nb-card-body>
 
 </nb-card>
+</div>
 
 <nb-card>
   <nb-card-header>

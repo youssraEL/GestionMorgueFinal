@@ -1,3 +1,6 @@
+import {Medecins} from './Medecins';
+import {Decedes} from './Decedes';
+
 export class Bulletins {
 
 id: number;
@@ -10,7 +13,9 @@ province: string;
 residece: string;
 cimetiere: string;
 NumTombe: number;
-remarque: number;
+compostage: string;
+medecin: Medecins;
+decede: Decedes;
 centre: string;
   constructor() {
   }

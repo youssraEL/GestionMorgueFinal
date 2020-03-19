@@ -39,6 +39,7 @@ import { TrafficChartComponent } from './traffic/traffic-chart.component';
 import { FormsModule } from '@angular/forms';
 import { StatusCardPlaceholderComponent } from './status-card/status-card-placeholder.component';
 import { AuthModule } from '../../@auth/auth.module';
+import {StatistiquesModule} from "../statistiques/statistiques.module";
 
 @NgModule({
   imports: [
@@ -57,6 +58,7 @@ import { AuthModule } from '../../@auth/auth.module';
     NbSpinnerModule,
     NgxEchartsModule,
     AuthModule,
+    StatistiquesModule,
   ],
   declarations: [
     DashboardComponent,
@@ -77,5 +79,8 @@ import { AuthModule } from '../../@auth/auth.module';
     TrafficChartComponent,
     StatusCardPlaceholderComponent,
   ],
+  exports: [
+    DashboardComponent
+  ]
 })
 export class DashboardModule { }

@@ -83,8 +83,9 @@ export class PagesMenu {
       },
       {
         title: 'statistiques',
+        link: '/pages/iot-dashboard',
       //  icon: 'pie-chart-outline',
-        children: [
+       /* children: [
          {
             title: 'Décès des nouveaux nés',
             link: '/pages/statistiques/NouveauxNes',
@@ -97,10 +98,10 @@ export class PagesMenu {
             title: 'Selon la nature de décès',
             link: '/pages/statistiques/NatureDeces',
           },
-         /* {
+         /!* {
             title: 'Selon la nature de décès(pivot) ',
             link: '/pages/statistiques/pivot',
-          },*/
+          },*!/
           {
             title: 'Selon les causes de décès',
             link: '/pages/statistiques/seloncausesDeces',
@@ -113,7 +114,7 @@ export class PagesMenu {
             title: 'Selon la région',
             link: '/pages/statistiques/region',
           },
-        ],
+        ],*/
       },
       {
         title: 'Rapport',

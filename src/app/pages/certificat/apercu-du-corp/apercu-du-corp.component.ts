@@ -11,7 +11,8 @@ import * as jsPDF from 'jspdf';
 import {formatDate} from '@angular/common';
 import { base64Str } from '../base64';
 import {environment} from '../../../../environments/environment';
-import {DecedesList} from '../../../@core/backend/common/model/DecedesList';
+import {Decedes} from '../../../@core/backend/common/model/Decedes';
+import {Medecins} from '../../../@core/backend/common/model/Medecins';
 // pdfMake.vfs = pdfFonts.pdfMake.vfs;
 @Component({
   selector: 'ngx-apercu-du-corp',
@@ -154,12 +155,12 @@ export class ApercuDuCorpComponent implements OnInit {
       doc.addImage(data, 'JPEG', 200, 10, 50, 50);
       doc.text('المملكة المغربية' + '\n' + 'وزارة الداخلية' + '\n' + 'ولاية جهة تطوان-طنجة' + '\n' + 'قسم حفظ الصحة و السلامة العمومية' + '\n' + 'مصلحة الطب الشرعي', 225, 70, 'center');
       doc.text('معاينة الجثة', 210, 170, { align: 'center', lang: 'ar' });
-      doc.text( ' عاين الطبيب او المساعد الصحي' + ': '  + this.nARM + this.pARM, 400, 200, { align: 'right', lang: 'ar' });
+      doc.text( ' عاين الطبيب او المساعد الصحي' + ': '  + this.MedecinHumain.nomAR + this.MedecinHumain.prenomAR, 400, 200, { align: 'right', lang: 'ar' });
       doc.text(' التابع للمركز الطبي الشرعي' + ': ' + this.ApercuCorps.CenterMedicoLegal, 400, 220, { align: 'right', lang: 'ar' });
-      doc.text('  جثة المرحوم'  + ': ' + this.nAR + this.pAR, 400, 240, { align: 'right', lang: 'ar' });
-      doc.text('  المزداد'  + ': '  + this.dn, 400, 260, { align: 'right', lang: 'ar' });
+      doc.text('  جثة المرحوم'  + ': ' + this.DecedeHumain.NomAR + this.DecedeHumain.PrenomAR, 400, 240, { align: 'right', lang: 'ar' });
+      doc.text('  المزداد'  + ': '  + formatDate(this.DecedeHumain.dateNaissance, 'dd-MM-yyyy', 'en-US', '+0530'), 400, 260, { align: 'right', lang: 'ar' });
       doc.text('  إثر وفاة'  + ': '  + this.e,  400, 280, { align: 'right', lang: 'ar' });
-      doc.text('   يوم'   + ': '  + this.dd, 400, 300, { align: 'right', lang: 'ar' });
+      doc.text('   يوم'   + ': '  + formatDate(this.DecedeHumain.dateDeces, 'dd-MM-yyyy', 'en-US', '+0530'), 400, 300, { align: 'right', lang: 'ar' });
       doc.text('وعليه فيمكن تحرير أمر الدفن', 350, 340, { align: 'right', lang: 'ar' });
       doc.text( ' طنجة في' + this.jstoday, 150, 400, { align: 'right', lang: 'ar' });
       doc.text('إمضاء ', 100, 420);
@@ -178,46 +179,24 @@ export class ApercuDuCorpComponent implements OnInit {
       }
     }
   }
-  DecedeHumain = [];
-  n: string;
-  p: string;
-  nM: string;
-  pM: string;
-  dd = '';
-  dn = '';
-  m: string;
-  nAR: string;
-  nARM: string;
+  DecedeHumain: Decedes;
   e: string;
-  pAR: string;
-  pARM: string;
-  MedecinHumain = [];
+  MedecinHumain: Medecins;
 i = 0;
   actualise() {
     if ( this.i !== 1) {
       this.serviceDecede.getByNumRegister(this.ApercuCorps.defunt).subscribe(obj => {
-        this.DecedeHumain.push(new DecedesList(obj));
-        this.nAR = obj.nomAR;
-        this.pAR = obj.prenomAR;
-        this.n = obj.nom;
-        this.p = obj.prenom;
-        this.dd = formatDate(obj.dateDeces, 'dd-MM-yyyy', 'en-US', '+0530');
-        this.dn = formatDate(obj.dateNaissance, 'dd-MM-yyyy', 'en-US', '+0530');
-        this.m = obj.natureMort;
-        if (this.m === 'Mort non naturel') {
+        this.DecedeHumain = obj;
+        if (this.DecedeHumain.natureMort === 'Mort non naturel') {
           this.e = 'وفاة غير طبيعية';
         }
-        if (this.m === 'Mort naturel') {
+        if (this.DecedeHumain.natureMort === 'Mort naturel') {
           this.e = 'وفاة طبيعية';
         }
       });
       console.log(this.DecedeHumain);
-      this.serviceMedcin.getById(this.MedecinID).subscribe(obj => {
-        this.MedecinHumain.push(
-        this.nARM = obj.nomAR,
-        this.pARM = obj.prenomAR,
-        this.nM = obj.nom,
-        this.pM = obj.prenom);
+      this.serviceMedcin.getById(this.MedecinID).subscribe(obj1 => {
+        this.MedecinHumain = obj1;
       });
       this.i = 1;
     }
@@ -270,7 +249,7 @@ i = 0;
               text: 'Défunt  : ', style: 'style',
             },
             {
-              text: this.n + ' ' + this.p, style: 'style',
+              text: this.DecedeHumain.nom + ' ' + this.DecedeHumain.prenom, style: 'style',
             },
           ],
         },
@@ -280,7 +259,7 @@ i = 0;
               text: 'Médecin/ Assistant de santé  : ', style: 'style',
             },
             {
-              text: this.nM + ' ' + this.pM, style: 'style',
+              text: this.MedecinHumain.nom + ' ' + this.MedecinHumain.prenom, style: 'style',
             },
           ],
         },

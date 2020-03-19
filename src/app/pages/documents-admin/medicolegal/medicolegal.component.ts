@@ -8,9 +8,10 @@ import {MedecinsService} from '../../../@core/backend/common/services/Medecins.s
 import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
 import {formatDate} from '@angular/common';
-import {DecedesList} from '../../../@core/backend/common/model/DecedesList';
 import * as jsPDF from 'jspdf';
 import { base64Str } from '../../certificat/base64.js';
+import {Decedes} from '../../../@core/backend/common/model/Decedes';
+import {Medecins} from '../../../@core/backend/common/model/Medecins';
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 @Component({
@@ -193,7 +194,7 @@ isAdmin: boolean;
               text: 'Je soussigné Docteur  : ' , style: 'style',
             },
             {
-              text: this.nM + ' ' + this.pM, style: 'style',
+              text: this.MedecinHumain.nom + ' ' + this.MedecinHumain.prenom, style: 'style',
             },
           ],
         },
@@ -213,7 +214,7 @@ isAdmin: boolean;
               text: 'Certifie que le corps du  : ', style: 'style',
             },
             {
-              text: this.n + ' ' + this.p , style: 'style',
+              text: this.DecedeHumain.nom + ' ' + this.DecedeHumain.prenom , style: 'style',
             },
           ],
         },
@@ -233,7 +234,7 @@ isAdmin: boolean;
               text: 'De : ', style: 'style',
             },
             {
-              text: this.s, style: 'style',
+              text: this.DecedeHumain.natureMort, style: 'style',
             },
           ],
         },
@@ -270,44 +271,24 @@ isAdmin: boolean;
     };
   }
 i = 0;
-  DecedeHumain = [];
-  MedecinHumain = [];
-  n: string;
-  nARM: string;
-  pARM: string;
-  nM: string;
-  p: string;
-  s: string;
-  pM: string;
+  DecedeHumain: Decedes;
+  MedecinHumain: Medecins;
   dd = '';
-  AdAR: string;
-  nAR: string;
-  pAR: string;
   e: string;
   add() {
     if ( this.i !== 1) {
       this.serviceDecede.getById(this.defunt).subscribe(obj => {
-        this.DecedeHumain.push(new DecedesList(obj));
-        this.n = obj.nom;
-        this.p = obj.prenom;
-        this.nAR = obj.NomAR;
-        this.pAR = obj.prenomAR;
+        this.DecedeHumain = obj;
         this.dd = formatDate(obj.dateDeces, 'dd-MM-yyyy', 'en-US', '+0530');
-        this.s = obj.natureMort;
-        if (this.s === 'Mort non naturel') {
+        if (this.DecedeHumain.natureMort === 'Mort non naturel') {
           this.e = 'وفاة غير طبيعية';
         }
-        if (this.s === 'Mort naturel') {
+        if (this.DecedeHumain.natureMort === 'Mort naturel') {
           this.e = 'وفاة طبيعية';
         }
       });
-      this.serviceMeddcin.getById(this.MedNom).subscribe(obj => {
-        this.MedecinHumain.push(
-          this.nARM = obj.nomAR,
-          this.pARM = obj.prenomAR,
-          this.nM = obj.nom,
-          this.pM = obj.prenom,
-        this.AdAR = obj.AdressAR);
+      this.serviceMeddcin.getById(this.MedNom).subscribe(obj1 => {
+        this.MedecinHumain = obj1;
       });
       this.i = 1;
     }
@@ -330,9 +311,9 @@ i = 0;
     doc.addImage(data, 'JPEG', 200, 10, 50, 50);
     doc.text('المملكة المغربية' + '\n' + 'وزارة الداخلية' + '\n' + 'ولاية جهة تطوان-طنجة' + '\n' + 'قسم حفظ الصحة و السلامة العمومية' + '\n' + 'مصلحة الطب الشرعي', 225, 70, 'center');
     doc.text('شهادة طبية', 210, 170, { align: 'center', lang: 'ar' });
-    doc.text( ' انا الواضع إسمه عقد تاريخه الدكتور' + ': '  + this.nARM + this.pARM, 400, 200, { align: 'right', lang: 'ar' });
-    doc.text('الساكن ب' + ': ' + this.AdAR, 400, 220, { align: 'right', lang: 'ar' });
-    doc.text(' اشهد ان جثة المرحوم'  + ': ' + this.nAR + this.pAR, 400, 240, { align: 'right', lang: 'ar' });
+    doc.text( ' انا الواضع إسمه عقد تاريخه الدكتور' + ': '  + this.MedecinHumain.nomAR + this.MedecinHumain.prenomAR, 400, 200, { align: 'right', lang: 'ar' });
+    doc.text('الساكن ب' + ': ' + this.DecedeHumain.adresseAR, 400, 220, { align: 'right', lang: 'ar' });
+    doc.text(' اشهد ان جثة المرحوم'  + ': ' + this.DecedeHumain.nom + this.DecedeHumain.PrenomAR, 400, 240, { align: 'right', lang: 'ar' });
     doc.text(' الذي توفي بتاريخ'  + ': '  + this.dd, 400, 260, { align: 'right', lang: 'ar' });
     doc.text('  إثر وفاة'  + ': '  + this.e,  400, 280, { align: 'right', lang: 'ar' });
     doc.text('بعد وضع جثة المرحوم في صندوق من الزنك وآخر من الخشب حسب القوانين الجاري بها\n  العمل، يمكن نقلهم بدون ان تكون في ذلك خطر على الصحة العمومية' , 400, 300, { align: 'right', lang: 'ar' });
