@@ -23,7 +23,7 @@ export class PagesMenu {
       {
         title: 'Dashboard',
         icon: 'home-outline',
-        link: '/pages/iot-dashboard',
+        link: '/pages/dashboard',
         children: undefined,
       },
       {
@@ -131,6 +131,7 @@ export class PagesMenu {
       },
       {
         title: 'Auth',
+        icon: '',
         children: [
           {
             title: 'Login',
@@ -151,7 +152,7 @@ export class PagesMenu {
         ],
       },
     ];
-    const Paramètres = [
+    const Parameters = [
       {
         title: 'Paramètres',
         icon: 'settings-outline',
@@ -168,6 +169,6 @@ export class PagesMenu {
       },
     ];
 
-    return of([...dashboardMenu, ...menu, ...Paramètres]);
+    return of([...dashboardMenu, ...menu, ...Parameters]);
   }
 }
