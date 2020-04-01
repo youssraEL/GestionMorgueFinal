@@ -24,6 +24,7 @@ import { DashboardComponent } from './dashboard.component';
 import { FormsModule } from '@angular/forms';
 
 import { AuthModule } from '../../@auth/auth.module';
+import {StatistiquesModule} from "../statistiques/statistiques.module";
 
 @NgModule({
   imports: [
@@ -42,9 +43,13 @@ import { AuthModule } from '../../@auth/auth.module';
     NbSpinnerModule,
     NgxEchartsModule,
     AuthModule,
+    StatistiquesModule,
   ],
   declarations: [
     DashboardComponent,
   ],
+  exports: [
+    DashboardComponent
+  ]
 })
 export class DashboardModule { }

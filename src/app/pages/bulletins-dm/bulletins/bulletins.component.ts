@@ -11,7 +11,6 @@ import {Medecins} from '../../../@core/backend/common/model/Medecins';
 import {Decedes} from '../../../@core/backend/common/model/Decedes';
 import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
-import {DecedesList} from '../../../@core/backend/common/model/DecedesList';
 import {formatDate} from '@angular/common';
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 import { Base64 } from 'js-base64';
@@ -25,6 +24,7 @@ import { Base64 } from 'js-base64';
 
 export class BulletinsComponent implements OnInit {
   compostage: string;
+  medcinid: number;
   constation: string;
   Bulletins: Bulletins = new Bulletins();
   typeBulletin = ['Bulletin de décès', 'Bulletin de mortinalité'];
@@ -35,6 +35,7 @@ export class BulletinsComponent implements OnInit {
   diagnostique = ['Mort naturelle', 'Mort non naturelle'];
   cimetiere = ['Cimetière Almojahidine', 'Cimetière Sidi Omar'];
   data: any;
+  ListNum = [];
   private sourceD: Decedes;
   settings = {
     add: {
@@ -103,170 +104,31 @@ export class BulletinsComponent implements OnInit {
     },
   };
   // source: Bulletins = new LocalDataSource();
-  settingsD = {
-    add: {
-      addButtonContent: '<i class="nb-plus"></i>',
-      createButtonContent: '<i class="nb-checkmark"></i>',
-      cancelButtonContent: '<i class="nb-close"></i>',
-      confirmCreate: true,
-    },
-    edit: {
-      editButtonContent: '<i class="nb-edit"></i>',
-      saveButtonContent: '<i class="nb-checkmark"></i>',
-      cancelButtonContent: '<i class="nb-close"></i>',
-      confirmSave: true,
-      mode: 'inline',
-    },
-    delete: {
-      deleteButtonContent: '<i class="nb-trash"></i>',
-      confirmDelete: true,
-
-    },
-    columns: {
-      id: {
-        title: 'numéro de registre',
-        type: 'number',
-        editable: false,
-      },
-      nom: {
-        title: 'Nom',
-        type: 'string',
-      },
-      prenom: {
-        title: 'Prénom',
-        type: 'string',
-      },
-      sexe: {
-        title: 'Sexe',
-        type: 'string',
-      },
-      CIN: {
-        title: 'CIN',
-        type: 'string',
-      },
-      dateNaissance: {
-        title: 'Date de naissance',
-        type: 'Date',
-      },
-      fils: {
-        title: 'Fille ou fils de ',
-        type: 'String',
-      },
-      nationalite: {
-        title: 'Nationalité ',
-        type: 'String',
-      },
-      adresse: {
-        title: 'Adresse',
-        type: 'String',
-      },
-      Etat: {
-        title: 'Etat Matrimonial',
-        type: 'String',
-      },
-      profession: {
-        title: 'Profession',
-        type: 'String',
-      },
-      dateDeces: {
-        title: 'date décès',
-        type: 'Date',
-      },
-      heure: {
-        title: 'date décès',
-        type: 'Date',
-      },
-      lieuxDeces: {
-        title: 'Lieu de décès',
-        type: 'String',
-      },
-      natureMort: {
-        title: 'nature de mort',
-        type: 'String',
-      },
-      mortNe: {
-        title: 'S\'agit-il d\'un mort né',
-        type: 'boolean',
-      },
-      causeMort: {
-        title: 'Cause de mort',
-        type: 'String',
-      },
-      causeInitial: {
-        title: 'Cause initiale',
-        type: 'String',
-      },
-      causeImmdiate: {
-        title: 'Cause immédiate',
-        type: 'String',
-      },
-      obstacle: {
-        title: 'Obstacle medicolégal',
-        type: 'boolean',
-      },
-    },
-  };
-  settingsM = {
-    add: {
-      addButtonContent: '<i class="nb-plus"></i>',
-      createButtonContent: '<i class="nb-checkmark"></i>',
-      cancelButtonContent: '<i class="nb-close"></i>',
-      confirmCreate: true,
-    },
-    edit: {
-      editButtonContent: '<i class="nb-edit"></i>',
-      saveButtonContent: '<i class="nb-checkmark"></i>',
-      cancelButtonContent: '<i class="nb-close"></i>',
-      confirmSave: true,
-      mode: 'inline',
-    },
-    delete: {
-      deleteButtonContent: '<i class="nb-trash"></i>',
-      confirmDelete: true,
-
-    },
-    columns: {
-      nom: {
-        title: 'Nom',
-        type: 'string',
-      },
-      prenom: {
-        title: 'Prénom',
-        type: 'string',
-      },
-      adress: {
-        title: 'Adresse',
-        type: 'string',
-      },
-      CIN: {
-        title: 'CIN d\'encadrant',
-        type: 'string',
-      },
-    },
-  };
   private source: Bulletins;
-  private sourceM: Medecins;
+  numRgtr: number;
   isAdmin: boolean;
-  DecedeHumain = [];
+  DecedeHumain: Decedes;
+  NomDecede = [];
+  NomDMedcin = [];
 
   constructor(private service: BulletinsService, private serviceD: DecedesService, private serviceM: MedecinsService,
               private serviceS: SmartTableData, private userservice: UsersService ) {
+    this.serviceD.getAll().subscribe( dataa => {
+      dataa.forEach (  obj => { this.NomDecede.push({nom: obj.nom, prenom: obj.prenom, id: obj.id, numRegister: obj.numRegister}); });
+   console.log(this.NomDecede);
+    });
+    this.serviceM.getAll().subscribe( dataa => {
+      dataa.forEach (  obj => { this.NomDMedcin.push({nom: obj.nom, prenom: obj.prenom, id: obj.id}); });
+      console.log(this.NomDMedcin);
+    });
+      this.MedecinHumain = new Medecins();
+      this.DecedeHumain = new Decedes();
   }
 
 
   init() {
     this.service.getAll().subscribe(data => {
       this.source = data;
-    });
-  }
-  initD() {
-    this.serviceD.getAll().subscribe(data => {
-      this.sourceD = data;
-    });
-  }
-  initM() {
-    this.serviceM.getAll().subscribe(data => {
-      this.sourceM = data;
     });
   }
   ngOnInit() {
@@ -276,8 +138,6 @@ export class BulletinsComponent implements OnInit {
       this.isAdmin = data.role.includes('ADMIN');
     });
     this.init();
-    this.initM();
-    this.initD();
   }
 
 
@@ -320,76 +180,6 @@ export class BulletinsComponent implements OnInit {
         event.confirm.resolve(event.data);
         this.service.delete(event.data.id).subscribe(data => {
           console.log(data);
-        });
-      } else {
-        event.confirm.reject(event.data);
-      }
-    }
-  }
-  createConfirmD(event) {
-    if (this.isAdmin) {
-      this.serviceD.getAll().subscribe(data => {
-        event.confirm.resolve(event.newData);
-        this.serviceD.create(event.newData).subscribe(obj => {
-        });
-        this.initD();
-      });
-    }
-  }
-  onEditConfirmD(event) {
-    if (this.isAdmin) {
-      this.serviceD.getAll().subscribe(data => {
-        console.log(data);
-        event.confirm.resolve(event.newData);
-        this.serviceD.update(event.newData).subscribe(obj => {
-          this.initD();
-        });
-        window.alert('les donnes sont change avec succes');
-      });
-    }
-  }
-  onDeleteConfirmD(event) {
-    if (this.isAdmin) {
-      if (window.confirm('Are you sure you want to delete?')) {
-        event.confirm.resolve(event.data);
-        this.serviceD.delete(event.data.id).subscribe(data => {
-          console.log(data);
-          this.initD();
-        });
-      } else {
-        event.confirm.reject(event.data);
-      }
-    }
-  }
-  createMedcin(event) {
-    if (this.isAdmin) {
-      this.serviceM.getAll().subscribe(data => {
-        event.confirm.resolve(event.newData);
-        this.serviceM.create(event.newData).subscribe(obj => {
-        });
-        this.initM();
-      });
-    }
-  }
-  onEditMedcin(event) {
-    if (this.isAdmin) {
-      this.serviceM.getAll().subscribe(data => {
-        console.log(data);
-        event.confirm.resolve(event.newData);
-        this.serviceM.update(event.newData).subscribe(obj => {
-          this.initM();
-        });
-        window.alert('les donnes sont change avec succes');
-      });
-    }
-  }
-  onDeleteMedcin(event) {
-    if (this.isAdmin) {
-      if (window.confirm('Are you sure you want to delete?')) {
-        event.confirm.resolve(event.data);
-        this.serviceM.delete(event.data.id).subscribe(data => {
-          console.log(data);
-          this.initM();
         });
       } else {
         event.confirm.reject(event.data);
@@ -453,9 +243,9 @@ export class BulletinsComponent implements OnInit {
                   colSpan: 2,
                   border: [true, false, true, false],
                   fontSize: 12,
-                  text: 'Décès survenu le:  ' + this.jstoday + ' à  '  + this.h + ' heure à  ' + this.l + '  \n' + 'Nom et prénom de décédé:  ' + this.n + ' ' + this.p +
-                    '\n' + 'Sexe:   ' + this.s + '  Nationalite: ' + this.na
-                  + '\n Domicile  ' + this.a + '\n age:  ' + this.getAgeParAnnee(this.dn, this.dd) + '  \n ',
+                  text: 'Décès survenu le:  ' + this.DecedeHumain.dateDeces + ' à  '  + this.DecedeHumain.heure + ' heure à  ' + this.DecedeHumain.lieuxDeces + '  \n' + 'Nom et prénom de décédé:  ' + this.DecedeHumain.nom + ' ' + this.DecedeHumain.prenom +
+                    '\n' + 'Sexe:   ' + this.DecedeHumain.sexe + '  Nationalite: ' + this.DecedeHumain.nationalite
+                  + '\n Domicile  ' + this.DecedeHumain.adresse + '\n age:  ' + this.getAgeParAnnee(this.DecedeHumain.dateNaissance, this.DecedeHumain.dateDeces) + '  \n ',
                 },
                 '',
               ],
@@ -472,7 +262,7 @@ export class BulletinsComponent implements OnInit {
               ],
               [
                 {
-                  text: 'N° de l\'acte au registre des décès ' + this.Bulletins.remarque +
+                  text: 'N° de l\'acte au registre des décès ' + this.numRgtr +
                     '\n de l\'hopital/ DMH/Commune ',
                   colSpan: 2,
                   fontSize: 12,
@@ -512,7 +302,15 @@ export class BulletinsComponent implements OnInit {
               ],
               [
                 {
-                  text: 'N° de l\'acte au registre  ' + this.Bulletins.remarque + '  N° de compostage: \n\n Lieu de déclaration:',
+                  text: 'N° de l\'acte au registre  ' + this.numRgtr + '  N° de compostage:' + this.compostage,
+                  colSpan: 2,
+                  border: [true, false, true, false],
+                },
+                '',
+              ],
+              [
+                {
+                  text: 'Lieu de déclaration:',
                   border: [true, false, false, false],
                 },
                 {border: [false, false, true, false],
@@ -534,9 +332,9 @@ export class BulletinsComponent implements OnInit {
                   fontSize: 12,
                   // margin: [0, 10, 0, 10],
                   ul: [
-                    'Province ou Prefecture: ' + this.prov,
-                    'Cercle: ' + this.Pre,
-                    'Municipalité /Centre/ Commune: ' + this.CD,
+                    'Province ou Prefecture: ' + this.DecedeHumain.provinceD,
+                    'Cercle: ' + this.DecedeHumain.prefectureD,
+                    'Municipalité /Centre/ Commune: ' + this.DecedeHumain.communeD,
                   ],
                 },
               ],
@@ -563,7 +361,7 @@ export class BulletinsComponent implements OnInit {
                   colSpan: 2,
                   border: [true, false, true, false],
                   text: 'Type de bulletin : ' + this.Bulletins.typeBulletin + '\n Date de décès  ' + this.jstoday + '\n'
-                  + 'Lieu où de décès est servenu :' + this.l ,
+                  + 'Lieu où de décès est servenu :' + this.DecedeHumain.lieuxDeces ,
                 },
                 '',
               ],
@@ -571,7 +369,7 @@ export class BulletinsComponent implements OnInit {
                 {
                   colSpan: 2,
                   border: [true, false, true, false],
-                  text: 'Sexe :' + this.s ,
+                  text: 'Sexe :' + this.DecedeHumain.sexe ,
                 },
                 '',
               ],
@@ -579,7 +377,7 @@ export class BulletinsComponent implements OnInit {
                 {
                   colSpan: 2,
                   border: [true, false, true, false],
-                  text: 'Age :' + this.getAgeParAnnee(this.dn, this.dd),
+                  text: 'Age :' + this.getAgeParAnnee(this.DecedeHumain.dateNaissance, this.DecedeHumain.dateDeces),
                 },
                 '',
               ],
@@ -587,7 +385,7 @@ export class BulletinsComponent implements OnInit {
                 {
                   colSpan: 2,
                   border: [true, false, true, false],
-                  text: 'Nationalité :' + this.na ,
+                  text: 'Nationalité :' + this.DecedeHumain.nationalite ,
                 },
                 '',
               ],
@@ -595,14 +393,14 @@ export class BulletinsComponent implements OnInit {
                 {
                   colSpan: 2,
                   border: [true, false, true, false],
-                  text: 'Etat matrimonial :' + this.e ,
+                  text: 'Etat matrimonial :' + this.DecedeHumain.Etat ,
                 },
                 '',
               ], [
                 {
                   colSpan: 2,
                   border: [true, false, true, true],
-                  text: 'Profession :' + this.pr ,
+                  text: 'Profession :' + this.DecedeHumain.profession ,
                 },
                 '',
               ],
@@ -635,8 +433,8 @@ export class BulletinsComponent implements OnInit {
                 {
                   border: [false, false, true, false],
                  ul: [
-                   'Cause immédiate' + this.cim,
-                   'Cause initiale', + this.cini,
+                   'Cause immédiate' + this.DecedeHumain.causeImmdiate,
+                   'Cause initiale', + this.DecedeHumain.causeInitial,
                  ],
                 },
               ],
@@ -658,7 +456,7 @@ export class BulletinsComponent implements OnInit {
                 {
                   border: [true, false, true, true],
                   colSpan: 2,
-                  text: 'Constatation faite par ' + this.constation,
+                  text: 'Constatation faite par ' + this.MedecinHumain.nom + ' ' + this.MedecinHumain.prenom,
                 },
                 '',
               ],
@@ -674,48 +472,19 @@ export class BulletinsComponent implements OnInit {
       },
     };
   }
-n: string;
-  p: string;
-  dd: Date;
-  h: string;
-  s: string;
-  na: string;
-  a: string;
-  dn: Date;
-  numR: string;
-  l: string;
-  e: string;
-  pr: string;
-  cim: string;
-  cini: string;
-  CD: string;
-  Pre: string;
-  prov: string;
+
   jstoday = '';
+  MedecinHumain: Medecins;
   i = 0;
   add() {
     if ( this.i !== 1) {
-      this.serviceD.getByNumRegister(this.Bulletins.remarque).subscribe(obj => {
-        this.DecedeHumain.push(new DecedesList(obj));
-        this.l = obj.lieuxDeces;
-        this.n = obj.nom;
-        this.p = obj.prenom;
-        this.dd = obj.dateDeces;
-        this.jstoday = formatDate(this.dd, 'dd-MM-yyyy', 'en-US', '+0530');
-        this.h = obj.heure;
-        this.s = obj.sexe;
-        this.na = obj.nationalite;
-        this.na = obj.nationaliteAR;
-        this.a = obj.adresse;
-        this.dn = obj.dateNaissance;
-        this.numR = obj.NumRegister;
-        this.e = obj.Etat;
-        this.pr = obj.profession;
-        this.cim = obj.causeImmdiate;
-        this.cini = obj.causeInitial;
-        this.CD = obj.communeD;
-        this.Pre = obj.prefectureD;
-        this.prov = obj.provinceD;
+      this.serviceD.getByNumRegister(this.numRgtr).subscribe(obj => {
+        this.DecedeHumain = obj;
+        this.jstoday = formatDate(this.DecedeHumain.dateDeces, 'dd-MM-yyyy', 'en-US', '+0530');
+        console.log(this.DecedeHumain);
+      });
+    this.serviceM.getById(this.medcinid).subscribe(obj1 => {
+        this.MedecinHumain = obj1;
       });
       this.i = 1;
     }

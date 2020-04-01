@@ -11,7 +11,6 @@ import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
 import {formatDate} from '@angular/common';
 import * as jsPDF from 'jspdf';
-import {DecedesList} from '../../../@core/backend/common/model/DecedesList';
 import { base64Str } from '../base64';
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
@@ -357,32 +356,21 @@ export class TransfertCorpsComponent implements OnInit {
       },
     };
   }
-  DecedeHumain = [];
-  n: string;
-  p: string;
+  DecedeHumain: Decedes;
   dd = '';
   dn = '';
   m: string;
-  nAR: string;
-  e: string;
-  pAR: string;
   i = 0;
   actualise() {
     if ( this.i !== 1) {
       this.serviceDecede.getByNumRegister(this.defauntID).subscribe(obj => {
-        this.DecedeHumain.push(new DecedesList(obj));
-        this.nAR = obj.nomAR;
-        this.pAR = obj.prenomAR;
-        this.n = obj.nom;
-        this.p = obj.prenom;
+        this.DecedeHumain = obj;
         this.dd = formatDate(obj.dateDeces, 'dd-MM-yyyy', 'en-US', '+0530');
         this.dn = formatDate(obj.dateNaissance, 'dd-MM-yyyy', 'en-US', '+0530');
-        this.m = obj.sexe;
-        if (this.m === 'Femme') {   this.e = 'أنثى'; }
-        if (this.m === 'Homme') {this.e = 'ذكر'; }
-        if (this.m === 'Indetermini') {this.e = 'غير محدد'; }
+        if (this.DecedeHumain.sexe === 'Femme') {   this.m = 'أنثى'; }
+        if (this.DecedeHumain.sexe === 'Homme') {this.m = 'ذكر'; }
+        if (this.DecedeHumain.sexe === 'Indetermini') {this.m = 'غير محدد'; }
       });
-      console.log(this.DecedeHumain);
       this.i = 1;
     }
   }
@@ -404,10 +392,10 @@ export class TransfertCorpsComponent implements OnInit {
     doc.text('المملكة المغربية' + '\n' + 'وزارة الداخلية' + '\n' + 'ولاية جهة تطوان-طنجة' + '\n' + 'قسم حفظ الصحة و السلامة العمومية' + '\n' + 'مصلحة الطب الشرعي', 225, 70, 'center');
     doc.text('رخصة الدفن', 210, 170, { align: 'center', lang: 'ar' });
     doc.text( ' يرخص في يوم' + ': ' + this.trnsfrCorps.declaration  , 400, 200, { align: 'right', lang: 'ar' });
-    doc.text('  بدفن جثة المرحومي' + ': '  + this.nAR + this.pAR,  400, 220, { align: 'right', lang: 'ar' });
+    doc.text('  بدفن جثة المرحومي' + ': '  + this.DecedeHumain.NomAR + this.DecedeHumain.PrenomAR,  400, 220, { align: 'right', lang: 'ar' });
     doc.text('  المتوفي بتاريخ'  + ': ' + this.dd, 400, 240, { align: 'right', lang: 'ar' });
     doc.text('  المزداد في'  + ': '  + this.dn, 400, 260, { align: 'right', lang: 'ar' });
-    doc.text('  الجنس'  + ': '  + this.e,  400, 280, { align: 'right', lang: 'ar' });
+    doc.text('  الجنس'  + ': '  + this.m,  400, 280, { align: 'right', lang: 'ar' });
     doc.text(' ملاحظة (1) : لا تقبل الجثة بالمقبرة إلى بتقديم رخصة الدفن', 350, 340, { align: 'right', lang: 'ar' });
     doc.text( ' طنجة في' + this.jstoday, 150, 400, { align: 'right', lang: 'ar' });
     doc.text('إمضاء ', 100, 420);

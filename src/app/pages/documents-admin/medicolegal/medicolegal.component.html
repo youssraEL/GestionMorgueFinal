@@ -27,6 +27,10 @@
       </div>
     </div>
 
+    <div *ngIf="defunt && MedNom">
+      {{add()}}
+    </div>
+
     <div class="row">
       <div class="col-sm-6">
         <div class="form-group">
@@ -73,6 +77,10 @@
                                     type="submit" nbButton status="success">
         <span>Certificat PDF</span></button>
       </div>
+      <div class="col-sm-6"><button (click)="pdf()"
+                                    class="btn btn-outline-primary fa-pull-right">
+        <span>PDF</span></button>
+      </div>
       <div class="col-sm-6">
         <button (click)="save()" class="fa-pull-left"
                 type="submit" nbButton status="success">
@@ -98,7 +106,8 @@
       [settings]="settings"
       [source]="source"
       (deleteConfirm)="onDeleteConfirm($event)"
-      (editConfirm)="onEditConfirm($event)">
+      (editConfirm)="onEditConfirm($event)"
+      (custom)="onCustomConfirm($event)">
     </ng2-smart-table>
   </nb-card-body>
 </nb-card>

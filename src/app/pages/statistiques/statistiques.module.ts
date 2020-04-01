@@ -20,15 +20,16 @@ import { CausechartComponent } from './selon-cause/causechart.component';
 import { SexechartComponent } from './sexe-deces/sexechart.component';
 import { EnchatschartComponent } from './deces-enfants/enchatschart.component';
 import { RegionchartComponent } from './region/regionchart.component';
+import {DashboardModule} from '../dashboard/dashboard.module';
 
 
 @NgModule({
-  declarations: [StatistiquesComponent,
-    NouveauxNesComponent,
-    DecesEnfantsComponent,
-    NatureDecesComponent,
-    MychartsComponent,
-    PivotComponent, SexeDecesComponent, RegionComponent, SelonCauseComponent, MychartsComponent, NaturechartComponent, CausechartComponent, SexechartComponent, EnchatschartComponent, RegionchartComponent],
+    declarations: [StatistiquesComponent,
+        NouveauxNesComponent,
+        DecesEnfantsComponent,
+        NatureDecesComponent,
+        MychartsComponent,
+        PivotComponent, SexeDecesComponent, RegionComponent, SelonCauseComponent, MychartsComponent, NaturechartComponent, CausechartComponent, SexechartComponent, EnchatschartComponent, RegionchartComponent],
   imports: [
     CommonModule,
     StatistiquesRoutingModule,
@@ -36,6 +37,14 @@ import { RegionchartComponent } from './region/regionchart.component';
     FormsModule,
     ChartsModule,
     NgxEchartsCoreModule,
+  ],
+  exports: [
+    EnchatschartComponent,
+    NaturechartComponent,
+    MychartsComponent,
+    RegionchartComponent,
+    CausechartComponent,
+    SexechartComponent,
   ],
 })
 export class StatistiquesModule { }
