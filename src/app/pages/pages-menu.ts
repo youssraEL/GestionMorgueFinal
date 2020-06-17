@@ -139,6 +139,10 @@ export class PagesMenu {
             link: '/auth/login',
           },
           {
+            title: 'logout',
+            link: '/auth/logout',
+          },
+          {
             title: 'Register',
             link: '/auth/register',
           },

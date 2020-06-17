@@ -1,7 +1,7 @@
 import {AfterViewInit, Component, OnDestroy, OnInit} from '@angular/core';
 import {DecedesService} from '../../../@core/backend/common/services/Decedes.service';
 import {NbThemeService} from '@nebular/theme';
-
+// C:\Users\OMEN\WebstormProjects\GestionMorgueFront\src\app\pages\statistiques\nature-deces\naturechart.component.ts
 @Component({
   selector: 'ngx-naturechart',
   template: `

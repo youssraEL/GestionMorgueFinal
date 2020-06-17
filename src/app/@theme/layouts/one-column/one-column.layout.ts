@@ -11,7 +11,7 @@ import { Component } from '@angular/core';
   styleUrls: ['./one-column.layout.scss'],
   template: `
       <nb-sidebar >
-          <nb-sidebar-header style=" height:100px;background-color: #206ea1"> <img style="width:150px; height:90px;" src="assets/images/Morgue.svg"></nb-sidebar-header>
+          <nb-sidebar-header style=" height:100px;background-color: #206ea1"></nb-sidebar-header>
          <nb-sidebar-footer style="background-color: #206ea1"></nb-sidebar-footer>
       </nb-sidebar>
       <nb-layout windowMode>
